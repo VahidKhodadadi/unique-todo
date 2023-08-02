@@ -7,6 +7,14 @@
         <template #main>
             <div class="new-task">
                 <input type="text" placeholder="Enter task title" v-model="taskTitle" />
+                <div class="due-date">
+                    <label for="due-date">Set due date</label>
+                    <input id="due-date" type="date" v-model="taskDueDate" />
+                </div>
+                <div class="remind-me">
+                    <label for="remind-me">Remind me</label>
+                    <input id="remind-me" type="datetime-local" v-model="taskRemindMeAtDateTime" />
+                </div>
                 <button @click="addTask">CREATE TASK</button>
             </div>
         </template>
@@ -28,7 +36,7 @@ export default {
             tasksListsStore: useTasksStore(),
             taskTitle: '',
             taskDueDate: '',
-            taskRemindMeAtDate: ''
+            taskRemindMeAtDateTime: ''
         }
     },
     methods: {
@@ -36,10 +44,14 @@ export default {
             this.$router.go(-1);
         },
         addTask() {
+            if (this.taskTitle.trim() === '') {
+                console.error('Enter a valid title!');
+                return;
+            }
             this.tasksListsStore.addTask(this.listId, {
                 title: this.taskTitle,
                 dueDate: this.taskDueDate,
-                remindMeAtDate: this.taskRemindMeAtDate
+                remindMeAtDateTime: this.taskRemindMeAtDateTime
             });
             this.goBack();
         }

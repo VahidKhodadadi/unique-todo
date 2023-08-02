@@ -15,9 +15,9 @@
                     <template #combobox>
                         <ul class="drop-list">
                             <li class="drop-item">Sort by</li>
-                            <li class="drop-item">Send a copy</li>
+                            <li class="drop-item" @click="copyList">Send a copy</li>
                             <li class="drop-item" @click="duplicateList">Duplicate list</li>
-                            <li class="drop-item" @click="this.showRenameModal = true">Rename list</li>
+                            <li class="drop-item" @click="showRenameModal = true">Rename list</li>
                             <li class="drop-item" @click="deleteList">Delete list</li>
                             <li class="drop-item">Change theme</li>
                         </ul>
@@ -129,9 +129,12 @@ export default {
             }
             this.tasksListsStore.renameList(this.listId, this.listTitle);
             this.showRenameModal = false;
+        },
+        copyList() {
+            this.tasksListsStore.copyList(this.listId);
         }
     },
-    mounted(){
+    mounted() {
         this.listTitle = this.listName;
     }
 }

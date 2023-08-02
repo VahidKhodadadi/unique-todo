@@ -44,7 +44,7 @@
 
                             <template #combobox>
                                 <ul class="drop-list">
-                                    <li class="drop-item">Promote to task</li>
+                                    <li @click="promoteToTask(step.id)" class="drop-item">Promote to task</li>
                                     <li @click="deleteStep(step.id)" class="drop-item">Delete step</li>
                                 </ul>
                             </template>
@@ -129,6 +129,9 @@ export default {
         },
         changeStepStatus(stepId, status) {
             this.tasksStore.changeStepStatus(this.$props.listId, this.$props.taskId, stepId, status);
+        },
+        promoteToTask(stepId) {
+            this.tasksStore.convertStepToTask(this.$props.listId, this.$props.taskId, stepId);
         }
     }
 }

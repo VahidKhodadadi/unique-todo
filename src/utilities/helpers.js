@@ -11,3 +11,9 @@ export const loadData = () => {
         return [];
     }
 }
+
+export const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text).then(res => {
+        console.log(JSON.parse(text));
+    });
+}

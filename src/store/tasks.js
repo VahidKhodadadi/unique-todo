@@ -1,6 +1,5 @@
-import { trackSlotScopes } from '@vue/compiler-core';
 import { defineStore } from 'pinia';
-import { loadData, saveData } from '../utilities/helpers';
+import { copyToClipboard, loadData, saveData } from '../utilities/helpers';
 
 export const useTasksStore = defineStore('tasksLists', {
     state: () => ({
@@ -39,9 +38,9 @@ export const useTasksStore = defineStore('tasksLists', {
             list.tasks.push({
                 completed: false,
                 createdAtDate: new Date().toISOString(),
-                dueDate: trackSlotScopes.dueDate,
+                dueDate: task.dueDate,
                 id: Math.ceil(Math.random() * 1000),
-                remindMeAtDate: task.remindMeAtDate,
+                remindMeAtDateTime: task.remindMeAtDateTime,
                 steps: [],
                 title: task.title
             });
@@ -92,7 +91,6 @@ export const useTasksStore = defineStore('tasksLists', {
         },
         duplicateList(listId) {
             const list = this.getListById(listId);
-            console.log('list',list)
             const newList = {
                 ...list,
                 id: Math.ceil(Math.random() * 1000)
@@ -118,6 +116,23 @@ export const useTasksStore = defineStore('tasksLists', {
                 }
             }
             return searchResult;
+        },
+        copyList(listId) {
+            const list = this.getListById(listId);
+            copyToClipboard(JSON.stringify(list));
+        },
+        convertStepToTask(listId, taskId, stepId) {
+            const list = this.getListById(listId);
+            const task = this.getTaskById(list, taskId);
+            const step = this.getStepById(task, stepId);
+            task.steps = task.steps.filter(sp => sp.id != stepId);
+            const newTask = {
+                ...step,
+                dueDate: null,
+                remindMeAtDateTime: null,
+                steps: []
+            }
+            list.tasks.push(newTask);
         }
     }
 });
