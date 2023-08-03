@@ -34,8 +34,8 @@
                         @click.stop="changeTaskStatus(task.id, !task.completed)" />
 
                     <div class="task-content">
-                        <h2>{{ task.title }}</h2>
-                        <span>{{ task.steps.filter(step => step.completed === true).length }} of {{ task.steps.length
+                        <h2>{{ task ? task.title : '' }}</h2>
+                        <span v-if="Boolean(task)">{{ task.steps.filter(step => step.completed === true).length }} of {{ task.steps.length
                         }}</span>
                     </div>
                 </li>

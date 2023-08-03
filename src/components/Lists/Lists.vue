@@ -51,11 +51,12 @@ export default {
             this.$router.push('/new-list');
         },
         goToTasksPage(listId) {
-            this.$router.push({ path: `/tasks/${listId}`, params: { listId } });
+            // this.$router.push({ path: `/tasks/${listId}`, params: { listId } });
+            this.$router.push({ name: 'tasks', params: { listId } });
         },
         goToSearchPage() {
             this.$router.push('/search');
-        },  
+        },
         deleteList(listId) {
             this.taskListsStore.deleteList(listId);
         }
@@ -64,9 +65,6 @@ export default {
         listItems() {
             return this.taskListsStore.$state.lists;
         }
-    },
-    mounted() {
-        this.taskListsStore.load();
     }
 }
 </script>

@@ -30,7 +30,8 @@ const router = createRouter({
     },
     {
       path: '/tasks/:listId',
-      component: Tasks
+      component: Tasks,
+      name: 'tasks'
     },
     {
       path: '/new-task',

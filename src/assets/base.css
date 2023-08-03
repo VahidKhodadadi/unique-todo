@@ -4,9 +4,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    
-  }
+  :root {}
 }
 
 *,
@@ -51,4 +49,15 @@ li.drop-item {
 li.drop-item:hover {
   background-color: #f3f0f0;
   cursor: pointer;
+}
+
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
