@@ -34,9 +34,14 @@
                         @click.stop="changeTaskStatus(task.id, !task.completed)" />
 
                     <div class="task-content">
-                        <h2>{{ task ? task.title : '' }}</h2>
-                        <span v-if="Boolean(task)">{{ task.steps.filter(step => step.completed === true).length }} of {{ task.steps.length
+                        <h2>{{ task.title }}</h2>
+                        <span v-if="Boolean(task)">{{ task.steps.filter(step => step.completed === true).length }} of {{
+                            task.steps.length
                         }}</span>
+                    </div>
+
+                    <div v-if="isTaskDueDated(task)">
+                        (Due dated)
                     </div>
                 </li>
             </ul>
@@ -73,6 +78,7 @@ import ArrowLeftIcon from '../../assets/svg/ArrowLeftIcon.vue';
 import Popover from '../UI/Popover/Popover.vue';
 import Modal from '../UI/Modal/Modal.vue';
 import MoreIcon from '../../assets/svg/MoreIcon.vue';
+import { isTaskDueDated } from '../../utilities/helpers';
 
 export default {
     components: {
@@ -132,7 +138,8 @@ export default {
         },
         copyList() {
             this.tasksListsStore.copyList(this.listId);
-        }
+        },
+        isTaskDueDated
     },
     mounted() {
         this.listTitle = this.listName;

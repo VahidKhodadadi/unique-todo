@@ -13,7 +13,32 @@ export const loadData = () => {
 }
 
 export const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text).then(res => {
+    navigator.clipboard.writeText(text).then(() => {
         console.log(JSON.parse(text));
     });
+}
+
+export const notifyUser = message => {
+    if (!('Notification' in window)) {
+        console.log('Notification API is not available!');
+        return;
+    }
+    else if (Notification.permission === 'granted') {
+        return new Notification(message);
+    }
+    else if (Notification.permission !== 'denied') {
+        Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+                return new Notification(message);
+            }
+        })
+    }
+}
+
+export const isTaskDueDated = (task) => {
+    return (
+        task.dueDate && // has due date
+        new Date(task.dueDate).getTime() < new Date().getTime() && // due date is passed
+        task.completed === false // task is not completed
+    )
 }

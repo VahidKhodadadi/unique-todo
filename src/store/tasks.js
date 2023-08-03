@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
-import { copyToClipboard, loadData, saveData } from '../utilities/helpers';
+import { copyToClipboard, isTaskDueDated, loadData, notifyUser, saveData } from '../utilities/helpers';
+import router from '../router';
 
 export const useTasksStore = defineStore('tasksLists', {
     state: () => ({
@@ -133,6 +134,18 @@ export const useTasksStore = defineStore('tasksLists', {
                 steps: []
             }
             list.tasks.push(newTask);
+        },
+        checkForDueDatedTasks() {
+            for (const list of this.$state.lists) {
+                for (const task of list.tasks) {
+                    if (isTaskDueDated(task)) {
+                        const notification = notifyUser(`Task '${task.title}' is not completed yet. Don't forget to deal with it!`);
+                        notification.addEventListener('click', (e) => {
+                            router.push(`/task/${list.id}/${task.id}`);
+                        })
+                    }
+                }
+            }
         }
     }
 });

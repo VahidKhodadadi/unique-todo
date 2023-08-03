@@ -3,15 +3,16 @@
         <template #header>
             <div class="header">
                 <ArrowLeftIcon class="icon" @click="goBack" />
-                <h1 class="list-title">{{ list?.title || '' }}</h1>
+                <h1 class="list-title">{{ list.title }}</h1>
             </div>
         </template>
 
         <template #main>
             <div class="task">
                 <div class="task-status">
-                    <input type="radio" :checked="task?.completed || false" @click="changeTaskStatus(!task.completed)" />
-                    <h2 class="task-title">{{ task?.title || '' }}</h2>
+                    <input type="radio" :checked="Boolean(task.completed)" @click="changeTaskStatus(!task.completed)" />
+                    <h2 class="task-title">{{ task.title }}</h2>
+                    <div v-if="isTaskDueDated(task)">(Due dated)</div>
 
                     <Popover>
                         <template #handle>
@@ -79,6 +80,7 @@ import ArrowLeftIcon from '../../assets/svg/ArrowLeftIcon.vue';
 import TrashIcon from '../../assets/svg/TrashIcon.vue';
 import MoreIcon from '../../assets/svg/MoreIcon.vue';
 import Popover from '../UI/Popover/Popover.vue';
+import { isTaskDueDated } from '../../utilities/helpers';
 
 export default {
     components: {
@@ -132,7 +134,8 @@ export default {
         },
         promoteToTask(stepId) {
             this.tasksStore.convertStepToTask(this.$props.listId, this.$props.taskId, stepId);
-        }
+        },
+        isTaskDueDated
     }
 }
 </script>
