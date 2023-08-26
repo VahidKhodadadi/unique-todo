@@ -3,8 +3,10 @@
         <template #header>
             <div class="header">
                 <div class="search">
-                    <ArrowLeftIcon class="icon" @click="goBack" />
-                    <input type="text" :value="searchPhrase" @input="searchChangeHandler" />
+                    <v-icon @click="goBack" size="large" color="black" icon="mdi-arrow-left"></v-icon>
+                    <!-- <input type="text" :value="searchPhrase" @input="searchChangeHandler" /> -->
+                    <v-text-field class="w-100" clearable :value="searchPhrase" @input="searchChangeHandler"
+                        placeholder="Search for tasks" variant="plain"></v-text-field>
                 </div>
             </div>
         </template>
@@ -21,13 +23,11 @@
 
 <script>
 import Layout from '../UI/Layout/Layout.vue';
-import ArrowLeftIcon from '../../assets/svg/ArrowLeftIcon.vue';
 import { useTasksStore } from '../../store/tasks';
 
 export default {
     components: {
-        Layout,
-        ArrowLeftIcon
+        Layout
     },
     data() {
         return {

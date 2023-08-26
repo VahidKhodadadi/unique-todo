@@ -2,67 +2,8 @@
 
 #app {
     height: 100vh;
-    padding: 30px;
-}
-
-input[type="text"],
-textarea {
-    width: 100%;
-    padding: 5px 10px;
-    height: 40px;
-    border: none;
-    border-bottom: 3px solid transparent;
-    background-color: aliceblue;
-    font-size: 1.6rem;
-    transition: all 0.3s ease;
-}
-
-input[type="text"]:focus,
-textarea:focus {
-    border: none;
-    outline: none;
-    border-bottom: 3px solid green;
-}
-
-button {
-    padding: 5px 10px;
-    font-size: 1.6rem;
-    transition: all 0.3s ease;
-    transform: scale(1);
-    display: flex;
-    align-items: center;
-}
-
-button:hover {
-    cursor: pointer;
-    transform: scale(1.05);
-}
-
-button.text-button {
-    border: none;
-    outline: none;
-    background-color: transparent;
-}
-
-button.outlined-button {
-    border-width: 1px;
-    border-style: solid;
-}
-
-button.normal {
-    border: none;
-    outline: none;
-}
-
-.icon {
-    width: 20px;
-    height: auto;
-}
-
-.icon:hover {
-    cursor: pointer;
 }
 
 main {
-    padding: 20px 0;
+    padding: 20px;
 }

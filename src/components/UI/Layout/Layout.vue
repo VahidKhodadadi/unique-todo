@@ -22,16 +22,19 @@
 
 footer {
     margin-top: auto;
-    background-color: #e2e2e2;
+    background-color: white;
     min-height: 60px;
     display: flex;
     align-items: center;
+    border-top: 3px solid #5d5c61;
 }
 
 header {
     min-height: 60px;
-    background-color: #e2e2e2;
+    background-color: #607D8B;
     display: flex;
     align-items: center;
+    padding: 0 10px;
+    border-bottom: 3px solid #5d5c61;
 }
 </style>

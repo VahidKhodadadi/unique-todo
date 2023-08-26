@@ -2,15 +2,17 @@
     <Layout>
         <template #header>
             <div class="header">
-                <ArrowLeftIcon class="icon" @click="goBack" />
+                <v-icon @click="goBack" size="large" color="black" icon="mdi-arrow-left"></v-icon>
                 <h1 class="list-title">{{ list.title }}</h1>
+                <div></div>
             </div>
         </template>
 
         <template #main>
             <div class="task">
                 <div class="task-status">
-                    <input type="radio" :checked="Boolean(task.completed)" @click="changeTaskStatus(!task.completed)" />
+                    <!-- <input type="radio" :checked="Boolean(task.completed)" @click="changeTaskStatus(!task.completed)" /> -->
+                    <v-checkbox v-model="task.completed" @click="changeTaskStatus(!task.completed)"></v-checkbox>
                     <h2 class="task-title">{{ task.title }}</h2>
                     <div v-if="isTaskDueDated(task)">(Due dated)</div>
 
@@ -33,8 +35,10 @@
                 <ul class="steps">
                     <li v-if="Boolean(task)" v-for="step in task.steps" class="step" :key="step.id">
                         <div class="step-content">
-                            <input type="radio" :checked="step.completed"
-                                @click="changeStepStatus(step.id, !step.completed)" />
+                            <!-- <input type="radio" :checked="step.completed"
+                                @click="changeStepStatus(step.id, !step.completed)" /> -->
+                            <v-checkbox v-model="step.completed"
+                                @click="changeStepStatus(step.id, !step.completed)"></v-checkbox>
                             <p class="step-title">{{ step.title }}</p>
                         </div>
 
@@ -53,20 +57,23 @@
                     </li>
                 </ul>
                 <div class="new-step-info">
-                    <input placeholder="new step" type="text" v-model="newStepTitle" />
-                    <button class="text-button" @click="addNewStep()">
+                    <!-- <input placeholder="new step" type="text" v-model="newStepTitle" /> -->
+                    <v-text-field class="w-100" v-model="newStepTitle" clearable placeholder="new step"></v-text-field>
+
+                    <!-- <button class="text-button" @click="addNewStep()">
                         <AddIcon class="icon" />
                         Next step
-                    </button>
-                    <textarea class="note-input" placeholder="Add note"></textarea>
+                    </button> -->
+                    <v-btn @click="addNewStep()" size="large" variant="text" prepend-icon="mdi-plus">Next step</v-btn>
+                    <!-- <textarea class="note-input" placeholder="Add note"></textarea> -->
                 </div>
             </div>
         </template>
 
         <template #footer>
             <div class="footer">
-                <p>Created 3 hours ago</p>
-                <TrashIcon @click="deleteTask" class="icon" />
+                <p>{{ createdAtRelativeTime() }}</p>
+                <v-icon @click="deleteTask" size="large" color="red" icon="mdi-delete-outline"></v-icon>
             </div>
         </template>
     </Layout>
@@ -76,8 +83,6 @@
 import { useTasksStore } from '../../store/tasks';
 import Layout from '../UI/Layout/Layout.vue';
 import AddIcon from '../../assets/svg/AddIcon.vue';
-import ArrowLeftIcon from '../../assets/svg/ArrowLeftIcon.vue';
-import TrashIcon from '../../assets/svg/TrashIcon.vue';
 import MoreIcon from '../../assets/svg/MoreIcon.vue';
 import Popover from '../UI/Popover/Popover.vue';
 import { isTaskDueDated } from '../../utilities/helpers';
@@ -86,8 +91,6 @@ export default {
     components: {
         Layout,
         AddIcon,
-        ArrowLeftIcon,
-        TrashIcon,
         MoreIcon,
         Popover
     },
@@ -135,7 +138,16 @@ export default {
         promoteToTask(stepId) {
             this.tasksStore.convertStepToTask(this.$props.listId, this.$props.taskId, stepId);
         },
-        isTaskDueDated
+        isTaskDueDated,
+        createdAtRelativeTime() {
+            const createdAtDate = new Date(this.task.createdAtDate);
+            const today = new Date();
+            const timestampDiff = today.getTime() - createdAtDate.getTime();
+            const dayDiff = timestampDiff / 1000 / 60 / 60 / 24;
+            const roundedDayDiff = Math.floor(dayDiff);
+            const rtf1 = new Intl.RelativeTimeFormat('fa', { style: 'short' });
+            return rtf1.format(-(roundedDayDiff), 'day');
+        }
     }
 }
 </script>
@@ -198,8 +210,11 @@ export default {
 
 .header {
     display: flex;
-    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
+
 
 .footer {
     display: flex;

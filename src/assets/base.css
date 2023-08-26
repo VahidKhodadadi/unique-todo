@@ -1,6 +1,6 @@
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
-  font-size: 10px;
+  font-size: 16px;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -60,4 +60,14 @@ li.drop-item:hover {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.headerTitle {
+  margin: 0 10px;
+  font-size: 2rem;
+  color: black;
 }

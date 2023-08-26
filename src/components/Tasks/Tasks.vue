@@ -2,14 +2,12 @@
     <Layout>
         <template #header>
             <div class="header">
-                <div class="header-content">
-                    <ArrowLeftIcon class="icon" @click="goBack" />
-                    <h1>{{ listName }}</h1>
-                </div>
+                <v-icon @click="goBack" size="large" color="black" icon="mdi-arrow-left"></v-icon>
+                <h1>{{ listName }}</h1>
 
                 <Popover>
                     <template #handle>
-                        <MoreIcon class="icon" />
+                        <v-icon size="large" color="black" icon="mdi-dots-vertical"></v-icon>
                     </template>
 
                     <template #combobox>
@@ -30,8 +28,8 @@
             <p v-if="tasks.length == 0">No task added yet, add one!</p>
             <ul class="tasks" v-if="tasks.length > 0">
                 <li v-for="task in tasks" class="task" @click="goToTaskPage(task.id)">
-                    <input type="radio" :checked="task.completed"
-                        @click.stop="changeTaskStatus(task.id, !task.completed)" />
+                    <v-checkbox v-model="task.completed"
+                        @click.stop="changeTaskStatus(task.id, !task.completed)"></v-checkbox>
 
                     <div class="task-content">
                         <h2>{{ task.title }}</h2>
@@ -62,10 +60,11 @@
         </template>
 
         <template #footer>
-            <button class="text-button" @click="goToNewTaskPage(listId)">
+            <!-- <button class="text-button" @click="goToNewTaskPage(listId)">
                 <AddIcon class="icon" />
                 Add task
-            </button>
+            </button> -->
+            <v-btn @click="goToNewTaskPage(listId)" size="large" variant="text" prepend-icon="mdi-plus">Add task</v-btn>
         </template>
     </Layout>
 </template>
@@ -74,7 +73,6 @@
 import Layout from '../UI/Layout/Layout.vue';
 import { useTasksStore } from '../../store/tasks';
 import AddIcon from '../../assets/svg/AddIcon.vue';
-import ArrowLeftIcon from '../../assets/svg/ArrowLeftIcon.vue';
 import Popover from '../UI/Popover/Popover.vue';
 import Modal from '../UI/Modal/Modal.vue';
 import MoreIcon from '../../assets/svg/MoreIcon.vue';
@@ -84,7 +82,6 @@ export default {
     components: {
         Layout,
         AddIcon,
-        ArrowLeftIcon,
         Popover,
         Modal,
         MoreIcon
@@ -180,11 +177,6 @@ export default {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-}
-
-.header-content {
-    display: flex;
-    align-items: center;
 }
 
 .action-buttons {

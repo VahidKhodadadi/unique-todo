@@ -13,9 +13,14 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@date-io/date-fns": "^2.17.0",
+    "@date-io/jalaali": "^2.17.0",
+    "@mdi/font": "^7.2.96",
+    "moment-jalaali": "^0.9.6",
     "pinia": "^2.1.4",
     "vue": "^3.3.4",
-    "vue-router": "^4.2.2"
+    "vue-router": "^4.2.2",
+    "vuetify": "^3.3.12"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",

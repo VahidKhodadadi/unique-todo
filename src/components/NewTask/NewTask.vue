@@ -1,21 +1,23 @@
 <template>
     <Layout>
         <template #header>
-            <ArrowLeftIcon class="icon" @click="goBack" />
+            <v-icon @click="goBack" size="large" color="black" icon="mdi-arrow-left"></v-icon>
+            <h1>New task</h1>
+            <div></div>
         </template>
 
         <template #main>
             <div class="new-task">
-                <input type="text" placeholder="Enter task title" v-model="taskTitle" />
-                <div class="due-date">
-                    <label for="due-date">Set due date</label>
-                    <input id="due-date" type="date" v-model="taskDueDate" />
-                </div>
-                <div class="remind-me">
-                    <label for="remind-me">Remind me</label>
-                    <input id="remind-me" type="datetime-local" v-model="taskRemindMeAtDateTime" />
-                </div>
-                <button @click="addTask">CREATE TASK</button>
+                <v-text-field class="w-100" v-model="taskTitle" :rules="[rules.required]" clearable
+                    label="Enter task title"></v-text-field>
+
+                <v-text-field class="w-100" type="datetime-local" v-model="taskDueDate" clearable
+                    label="Due date"></v-text-field>
+
+                <v-text-field class="w-100" type="datetime-local" v-model="taskRemindMeAtDateTime" clearable
+                    label="Remind me at"></v-text-field>
+
+                <v-btn color="blue-grey-darken-3" @click="addTask" size="large">Create task</v-btn>
             </div>
         </template>
     </Layout>
@@ -24,19 +26,20 @@
 <script>
 import { useTasksStore } from '../../store/tasks';
 import Layout from '../UI/Layout/Layout.vue';
-import ArrowLeftIcon from '../../assets/svg/ArrowLeftIcon.vue';
 
 export default {
     components: {
-        Layout,
-        ArrowLeftIcon
+        Layout
     },
     data() {
         return {
             tasksListsStore: useTasksStore(),
             taskTitle: '',
             taskDueDate: '',
-            taskRemindMeAtDateTime: ''
+            taskRemindMeAtDateTime: '',
+            rules: {
+                required: value => !!value || 'Field is required',
+            },
         }
     },
     methods: {
@@ -68,7 +71,6 @@ export default {
 .new-task {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+    align-items: center;
 }
 </style>

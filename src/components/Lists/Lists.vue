@@ -2,27 +2,25 @@
     <Layout>
         <template #header>
             <div class="header">
-                <p>Account info and search</p>
-                <SearchIcon class="icon" @click="goToSearchPage" />
+                <div></div>
+                <h1>Lists</h1>
+                <v-icon @click="goToSearchPage" size="large" color="black" icon="mdi-magnify"></v-icon>
             </div>
         </template>
         <template #main>
-            <h1>Lists</h1>
             <ul class="lists">
                 <li v-for="list in listItems" class="list" @click="goToTasksPage(list.id)" :key="list.id">
                     <p>
                         {{ list.title }}
                         <span>({{ list.tasks.length }})</span>
                     </p>
-                    <TrashIcon fill="#cf2b2e" class="icon" @click.stop="deleteList(list.id)" />
+                    <v-icon @click.stop="deleteList(list.id)" size="large" color="red" icon="mdi-delete-outline"></v-icon>
                 </li>
+
             </ul>
         </template>
         <template #footer>
-            <button class="text-button" @click="goToNewListPage">
-                <AddIcon class="icon" />
-                New list
-            </button>
+            <v-btn @click="goToNewListPage" size="large" variant="text" prepend-icon="mdi-plus">New list</v-btn>
         </template>
     </Layout>
 </template>
@@ -32,14 +30,12 @@ import Layout from '../UI/Layout/Layout.vue';
 import { useTasksStore } from '../../store/tasks';
 import TrashIcon from '../../assets/svg/TrashIcon.vue';
 import AddIcon from '../../assets/svg/AddIcon.vue';
-import SearchIcon from '../../assets/svg/SearchIcon.vue';
 
 export default {
     components: {
         Layout,
         TrashIcon,
-        AddIcon,
-        SearchIcon
+        AddIcon
     },
     data() {
         return {
