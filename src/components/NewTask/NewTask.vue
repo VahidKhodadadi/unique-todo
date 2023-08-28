@@ -1,13 +1,15 @@
 <template>
     <Layout>
         <template #header>
-            <v-icon @click="goBack" size="large" color="black" icon="mdi-arrow-left"></v-icon>
-            <h1>New task</h1>
-            <div></div>
+            <div class="flex flex-row justify-between items-center w-100">
+                <v-icon @click="goBack" size="large" color="black" icon="mdi-arrow-left"></v-icon>
+                <h1>New task</h1>
+                <div></div>
+            </div>
         </template>
 
         <template #main>
-            <div class="new-task">
+            <div class="flex flex-col items-center">
                 <v-text-field class="w-100" v-model="taskTitle" :rules="[rules.required]" clearable
                     label="Enter task title"></v-text-field>
 
@@ -66,11 +68,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-.new-task {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-</style>

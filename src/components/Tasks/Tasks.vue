@@ -1,41 +1,74 @@
 <template>
     <Layout>
         <template #header>
-            <div class="header">
+            <div class="flex flex-row justify-between items-center w-100">
                 <v-icon @click="goBack" size="large" color="black" icon="mdi-arrow-left"></v-icon>
                 <h1>{{ listName }}</h1>
 
-                <Popover>
-                    <template #handle>
-                        <v-icon size="large" color="black" icon="mdi-dots-vertical"></v-icon>
+                <v-dialog v-model="showListOptions" width="auto">
+                    <template v-slot:activator="{ props }">
+                        <v-icon v-bind="props" size="large" color="black" icon="mdi-dots-vertical"></v-icon>
                     </template>
+                    <v-card>
+                        <v-card-text>
+                            <ul class="flex flex-col">
+                                <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">Sort by</li>
+                                <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8" @click="copyList">Send a copy
+                                </li>
+                                <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8" @click="duplicateList">
+                                    Duplicate list</li>
 
-                    <template #combobox>
-                        <ul class="drop-list">
-                            <li class="drop-item">Sort by</li>
-                            <li class="drop-item" @click="copyList">Send a copy</li>
-                            <li class="drop-item" @click="duplicateList">Duplicate list</li>
-                            <li class="drop-item" @click="showRenameModal = true">Rename list</li>
-                            <li class="drop-item" @click="deleteList">Delete list</li>
-                            <li class="drop-item">Change theme</li>
-                        </ul>
-                    </template>
-                </Popover>
+                                <v-dialog v-model="showRenameModal" width="auto">
+                                    <template v-slot:activator="{ props }">
+                                        <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8" v-bind="props">Rename
+                                            list</li>
+                                    </template>
+
+                                    <v-card>
+                                        <v-card-text>
+                                            <div class="flex flex-col items-center justify-start">
+                                                <h3 class="mb-2">Rename list</h3>
+                                                <v-text-field class="w-100" v-model="listTitle" :rules="[rules.required]"
+                                                    clearable label="Rename list"></v-text-field>
+                                            </div>
+                                        </v-card-text>
+                                        <v-card-actions>
+                                            <div class="flex items-center justify-evenly mt-2 w-100">
+                                                <v-btn color="blue-grey-darken-3" @click="showRenameModal = false"
+                                                    size="large" variant="text">Cancel</v-btn>
+                                                <v-btn color="blue-grey-darken-3" @click="renameList"
+                                                    size="large">Save</v-btn>
+                                            </div>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog>
+
+                                <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8" @click="deleteList">Delete list
+                                </li>
+                                <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">Change theme</li>
+                            </ul>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-btn color="primary" block @click="showListOptions = false">Close</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
             </div>
         </template>
 
         <template #main>
             <p v-if="tasks.length == 0">No task added yet, add one!</p>
-            <ul class="tasks" v-if="tasks.length > 0">
-                <li v-for="task in tasks" class="task" @click="goToTaskPage(task.id)">
-                    <v-checkbox v-model="task.completed"
-                        @click.stop="changeTaskStatus(task.id, !task.completed)"></v-checkbox>
+            <ul class="flex flex-col items-start" v-if="tasks.length > 0">
+                <li v-for="task in tasks"
+                    class="flex w-100 justify-between py-2 border-b-2 border-l-blue-950 hover:cursor-pointer hover:bg-slate-50"
+                    @click="goToTaskPage(task.id)">
+                    <v-checkbox v-model="task.completed" @click.stop="changeTaskStatus(task.id, !task.completed)"
+                        hide-details="true"></v-checkbox>
 
-                    <div class="task-content">
-                        <h2>{{ task.title }}</h2>
-                        <span v-if="Boolean(task)">{{ task.steps.filter(step => step.completed === true).length }} of {{
-                            task.steps.length
-                        }}</span>
+                    <div class="flex flex-col justify-start items-start ml-2">
+                        <p class="text-slate-800 font-semibold">{{ task.title }}</p>
+                        <span class="ml-auto" v-if="Boolean(task)">{{ task.steps.filter(step => step.completed ===
+                            true).length }} of {{ task.steps.length }}</span>
                     </div>
 
                     <div v-if="isTaskDueDated(task)">
@@ -43,27 +76,9 @@
                     </div>
                 </li>
             </ul>
-
-            <Modal v-if="this.showRenameModal === true">
-                <template #main>
-                    <div class="rename-list">
-                        <h3 class="rename-header">Rename list</h3>
-                        <input type="text" v-model="listTitle" />
-
-                        <div class="action-buttons">
-                            <button @click="renameList">rename</button>
-                            <button @click="this.showRenameModal = false" class="text-button">cancel</button>
-                        </div>
-                    </div>
-                </template>
-            </Modal>
         </template>
 
         <template #footer>
-            <!-- <button class="text-button" @click="goToNewTaskPage(listId)">
-                <AddIcon class="icon" />
-                Add task
-            </button> -->
             <v-btn @click="goToNewTaskPage(listId)" size="large" variant="text" prepend-icon="mdi-plus">Add task</v-btn>
         </template>
     </Layout>
@@ -72,25 +87,21 @@
 <script>
 import Layout from '../UI/Layout/Layout.vue';
 import { useTasksStore } from '../../store/tasks';
-import AddIcon from '../../assets/svg/AddIcon.vue';
-import Popover from '../UI/Popover/Popover.vue';
-import Modal from '../UI/Modal/Modal.vue';
-import MoreIcon from '../../assets/svg/MoreIcon.vue';
 import { isTaskDueDated } from '../../utilities/helpers';
 
 export default {
     components: {
-        Layout,
-        AddIcon,
-        Popover,
-        Modal,
-        MoreIcon
+        Layout
     },
     data() {
         return {
             tasksListsStore: useTasksStore(),
             showRenameModal: false,
-            listTitle: ''
+            showListOptions: false,
+            listTitle: '',
+            rules: {
+                required: value => !!value || 'Field is required',
+            },
         }
     },
     computed: {
@@ -143,58 +154,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-.tasks {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.task {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
-    padding: 10px 0;
-    border-bottom: 1px solid #e2e2e2;
-}
-
-.task:hover {
-    cursor: pointer;
-}
-
-.task-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    margin-left: 20px;
-}
-
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.action-buttons {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    margin-top: 20px;
-    width: 100%;
-}
-
-.rename-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.rename-header {
-    margin-bottom: 20px;
-}
-</style>

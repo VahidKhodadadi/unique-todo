@@ -1,22 +1,23 @@
 <template>
     <Layout>
         <template #header>
-            <div class="header">
+            <div class="flex flex-row justify-between items-center w-100">
                 <div></div>
                 <h1>Lists</h1>
                 <v-icon @click="goToSearchPage" size="large" color="black" icon="mdi-magnify"></v-icon>
             </div>
         </template>
         <template #main>
-            <ul class="lists">
-                <li v-for="list in listItems" class="list" @click="goToTasksPage(list.id)" :key="list.id">
-                    <p>
+            <ul class="flex flex-col justify-center items-center w-100">
+                <li v-for="list in listItems"
+                    class="flex w-100 justify-between py-2 border-b-2 border-l-blue-950 hover:cursor-pointer hover:bg-slate-50"
+                    @click="goToTasksPage(list.id)" :key="list.id">
+                    <p class="text-slate-800 font-semibold">
                         {{ list.title }}
                         <span>({{ list.tasks.length }})</span>
                     </p>
                     <v-icon @click.stop="deleteList(list.id)" size="large" color="red" icon="mdi-delete-outline"></v-icon>
                 </li>
-
             </ul>
         </template>
         <template #footer>
@@ -28,14 +29,10 @@
 <script>
 import Layout from '../UI/Layout/Layout.vue';
 import { useTasksStore } from '../../store/tasks';
-import TrashIcon from '../../assets/svg/TrashIcon.vue';
-import AddIcon from '../../assets/svg/AddIcon.vue';
 
 export default {
     components: {
-        Layout,
-        TrashIcon,
-        AddIcon
+        Layout
     },
     data() {
         return {
@@ -67,13 +64,6 @@ export default {
 
 
 <style scoped>
-.lists {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-}
-
 .list {
     display: flex;
     width: 100%;
@@ -84,12 +74,5 @@ export default {
 
 .list:hover {
     cursor: pointer;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
 }
 </style>

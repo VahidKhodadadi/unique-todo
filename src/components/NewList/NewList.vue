@@ -1,23 +1,25 @@
 <template>
     <Layout>
         <template #header>
-            <v-icon @click="goBack" size="large" color="black" icon="mdi-arrow-left"></v-icon>
-            <h1 class="headerTitle">New List</h1>
+            <div class="flex flex-row justify-between items-center w-100">
+                <v-icon @click="goBack" size="large" color="black" icon="mdi-arrow-left"></v-icon>
+                <h1>New List</h1>
+                <div></div>
+            </div>
         </template>
 
         <template #main>
-            <div class="new-list">
-                <!-- <input type="text" placeholder="Enter list title" v-model="listTitle" /> -->
+            <div class="flex flex-col items-start gap-2">
                 <v-text-field class="w-100" v-model="listTitle" :rules="[rules.required]" clearable
                     label="Enter list title"></v-text-field>
 
-                <ul class="colors">
+                <ul class="w-100 flex items-center justify-evenly mb-3 gap-1 list-none">
                     <li @click="selectColor(color)" v-for="color in listColors" :style="{ backgroundColor: color }"
-                        class="color" :class="listColor === color ? 'active' : ''">
+                        class="w-[30px] h-[30px] rounded-full border-4" :class="listColor === color ? 'border-slate-700' : 'border-transparent'">
                     </li>
                 </ul>
 
-                <div class="action-buttons">
+                <div class="flex items-center justify-around w-100">
                     <v-btn color="blue-grey-darken-3" @click="goToTasksListPage" size="large" variant="text">Cancel</v-btn>
                     <v-btn color="blue-grey-darken-3" @click="addList" size="large">Create list</v-btn>
                 </div>
@@ -68,40 +70,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-.new-list {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-}
-
-.colors {
-    list-style: none;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    margin-bottom: 20px;
-    gap: 4px;
-}
-
-.color {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-}
-
-.color.active {
-    border: 5px solid #5d5c61;
-}
-
-.action-buttons {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    width: 100%;
-}
-</style>

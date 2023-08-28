@@ -30,28 +30,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-ul.drop-list {
-  min-width: 160px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  list-style: none;
-}
-
-li.drop-item {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 4px 10px;
-}
-
-li.drop-item:hover {
-  background-color: #f3f0f0;
-  cursor: pointer;
-}
-
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;
@@ -62,12 +40,3 @@ li.drop-item:hover {
   opacity: 0;
 }
 
-.w-100 {
-  width: 100%;
-}
-
-.headerTitle {
-  margin: 0 10px;
-  font-size: 2rem;
-  color: black;
-}

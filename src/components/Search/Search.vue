@@ -1,19 +1,22 @@
 <template>
     <Layout>
         <template #header>
-            <div class="header">
-                <div class="search">
+            <div class="flex flex-row justify-between items-center w-100">
+                <div class="flex items-center justify-between w-100">
                     <v-icon @click="goBack" size="large" color="black" icon="mdi-arrow-left"></v-icon>
-                    <!-- <input type="text" :value="searchPhrase" @input="searchChangeHandler" /> -->
-                    <v-text-field class="w-100" clearable :value="searchPhrase" @input="searchChangeHandler"
-                        placeholder="Search for tasks" variant="plain"></v-text-field>
+                    <div class="w-5/6">
+                        <v-text-field clearable :value="searchPhrase" @input="searchChangeHandler"
+                            placeholder="Search for tasks" variant="plain"></v-text-field>
+                    </div>
+                    <div></div>
                 </div>
             </div>
         </template>
 
         <template #main>
-            <ul class="tasks">
-                <li class="task" v-for="task in searchedTasks" :key="task.id" @click="goToTaskPage(task.id)">
+            <ul class="list-none">
+                <li class="px-3 py-2 border-b-2 border-cyan-950 hover:cursor-pointer" v-for="task in searchedTasks"
+                    :key="task.id" @click="goToTaskPage(task.id)">
                     <p>{{ task.title }}</p>
                 </li>
             </ul>
@@ -57,34 +60,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.search {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: 100%;
-}
-
-.tasks {
-    list-style: none;
-}
-
-.task {
-    padding: 10px 5px;
-    border-bottom: 1px solid #e2e2e2;
-    transition: all 0.3 ease;
-}
-
-.task:hover {
-    cursor: pointer;
-    background-color: #e2e2e2;
-}
-</style>
