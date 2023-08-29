@@ -5,7 +5,7 @@ export const saveData = (data) => {
 export const loadData = () => {
     const data = localStorage.getItem('tasks_data');
     try {
-        return JSON.parse(data);
+        return JSON.parse(data || []);
     }
     catch (err) {
         return [];
