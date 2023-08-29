@@ -3,7 +3,7 @@
         <template #header>
             <div class="flex flex-row justify-between items-center w-100">
                 <v-icon @click="goBack" size="large" color="black" icon="mdi-arrow-left"></v-icon>
-                <h1>{{ listName }}</h1>
+                <h1 class="text-white text-3xl">{{ listName }}</h1>
 
                 <v-dialog v-model="showListOptions" width="auto">
                     <template v-slot:activator="{ props }">
@@ -57,22 +57,23 @@
         </template>
 
         <template #main>
-            <p v-if="tasks.length == 0">No task added yet, add one!</p>
+            <p v-if="tasks.length == 0" class="text-center">No task added yet, add one!</p>
             <ul class="flex flex-col items-start" v-if="tasks.length > 0">
                 <li v-for="task in tasks"
                     class="flex w-100 justify-between py-2 border-b-2 border-l-blue-950 hover:cursor-pointer hover:bg-slate-50"
                     @click="goToTaskPage(task.id)">
-                    <v-checkbox v-model="task.completed" @click.stop="changeTaskStatus(task.id, !task.completed)"
-                        hide-details="true"></v-checkbox>
-
-                    <div class="flex flex-col justify-start items-start ml-2">
-                        <p class="text-slate-800 font-semibold">{{ task.title }}</p>
-                        <span class="ml-auto" v-if="Boolean(task)">{{ task.steps.filter(step => step.completed ===
+                    <div class="flex flex-col justify-between items-start ml-2">
+                        <div class="flex justify-start items-center">
+                            <v-icon v-if="isTaskDueDated(task)" size="large" color="orange" icon="mdi-alert"></v-icon>
+                            <p class="text-slate-800 font-semibold">{{ task.title }}</p>
+                        </div>
+                        <span v-if="Boolean(task)">{{ task.steps.filter(step => step.completed ===
                             true).length }} of {{ task.steps.length }}</span>
                     </div>
 
-                    <div v-if="isTaskDueDated(task)">
-                        (Due dated)
+                    <div>
+                        <v-checkbox v-model="task.completed" @click.stop="changeTaskStatus(task.id, !task.completed)"
+                            hide-details="true"></v-checkbox>
                     </div>
                 </li>
             </ul>

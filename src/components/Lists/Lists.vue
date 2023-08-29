@@ -3,11 +3,12 @@
         <template #header>
             <div class="flex flex-row justify-between items-center w-100">
                 <div></div>
-                <h1>Lists</h1>
+                <h1 class="text-white text-3xl">Lists</h1>
                 <v-icon @click="goToSearchPage" size="large" color="black" icon="mdi-magnify"></v-icon>
             </div>
         </template>
         <template #main>
+            <p v-if="listItems.length == 0" class="text-center">No list added yet, add one!</p>
             <ul class="flex flex-col justify-center items-center w-100">
                 <li v-for="list in listItems"
                     class="flex w-100 justify-between py-2 border-b-2 border-l-blue-950 hover:cursor-pointer hover:bg-slate-50"
@@ -61,18 +62,3 @@ export default {
     }
 }
 </script>
-
-
-<style scoped>
-.list {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #e2e2e2;
-}
-
-.list:hover {
-    cursor: pointer;
-}
-</style>

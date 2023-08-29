@@ -17,6 +17,7 @@ export default {
   mounted() {
     this.taskListsStore.load();
     this.taskListsStore.checkForDueDatedTasks();
+    this.taskListsStore.checkForReminders();
   }
 }
 </script>

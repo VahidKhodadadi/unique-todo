@@ -35,10 +35,10 @@ export const notifyUser = message => {
     }
 }
 
-export const isTaskDueDated = (task) => {
+export const isTaskDueDated = (date, completed) => {
     return (
-        task.dueDate && // has due date
-        new Date(task.dueDate).getTime() < new Date().getTime() && // due date is passed
-        task.completed === false // task is not completed
+        date && // has due date
+        new Date(date).getTime() < new Date().getTime() && // due date is passed
+        completed === false // task is not completed
     )
 }

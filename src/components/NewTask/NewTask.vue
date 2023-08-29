@@ -3,7 +3,7 @@
         <template #header>
             <div class="flex flex-row justify-between items-center w-100">
                 <v-icon @click="goBack" size="large" color="black" icon="mdi-arrow-left"></v-icon>
-                <h1>New task</h1>
+                <h1 class="text-white text-3xl">New task</h1>
                 <div></div>
             </div>
         </template>

@@ -3,18 +3,21 @@
         <template #header>
             <div class="flex flex-row justify-between items-center w-100">
                 <v-icon @click="goBack" size="large" color="black" icon="mdi-arrow-left"></v-icon>
-                <h1>{{ list.title }}</h1>
+                <h1 class="text-white text-3xl">{{ list.title }}</h1>
                 <div></div>
             </div>
         </template>
 
         <template #main>
             <div class="flex flex-col items-start">
-                <div class="flex items-center justify-start w-100">
-                    <v-checkbox hide-details="true" v-model="task.completed"
-                        @click="changeTaskStatus(!task.completed)"></v-checkbox>
-                    <h2 class="mx-3 text-slate-800 font-semibold">{{ task.title }}</h2>
-                    <div v-if="isTaskDueDated(task)">(Due dated)</div>
+                <div class="flex items-center justify-between w-100">
+                    <div class="flex justify-start items-center">
+                        <v-checkbox hide-details="true" v-model="task.completed"
+                            @click="changeTaskStatus(!task.completed)"></v-checkbox>
+                        <div v-if="isTaskDueDated(task)"><v-icon v-if="isTaskDueDated(task)" size="large" color="orange"
+                                icon="mdi-alert"></v-icon></div>
+                        <p class="mx-3 text-slate-800 font-semibold">{{ task.title }}</p>
+                    </div>
 
                     <v-dialog v-model="showTaskOptions" width="auto">
                         <template v-slot:activator="{ props }">
@@ -146,7 +149,7 @@ export default {
             const dayDiff = timestampDiff / 1000 / 60 / 60 / 24;
             const roundedDayDiff = Math.floor(dayDiff);
             const rtf1 = new Intl.RelativeTimeFormat('en', { style: 'short' });
-            return rtf1.format(-(roundedDayDiff), 'day');
+            return roundedDayDiff == 0 ? 'Today' : rtf1.format(-(roundedDayDiff), 'day');
         }
     }
 }

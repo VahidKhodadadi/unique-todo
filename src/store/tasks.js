@@ -138,7 +138,19 @@ export const useTasksStore = defineStore('tasksLists', {
         checkForDueDatedTasks() {
             for (const list of this.$state.lists) {
                 for (const task of list.tasks) {
-                    if (isTaskDueDated(task)) {
+                    if (isTaskDueDated(task.dueDate, task.completed)) {
+                        const notification = notifyUser(`Task '${task.title}' deadline is passed. Don't forget to deal with it!`);
+                        notification.addEventListener('click', (e) => {
+                            router.push(`/task/${list.id}/${task.id}`);
+                        })
+                    }
+                }
+            }
+        },
+        checkForReminders() {
+            for (const list of this.$state.lists) {
+                for (const task of list.tasks) {
+                    if (isTaskDueDated(task.remindMeAtDateTime, task.completed)) {
                         const notification = notifyUser(`Task '${task.title}' is not completed yet. Don't forget to deal with it!`);
                         notification.addEventListener('click', (e) => {
                             router.push(`/task/${list.id}/${task.id}`);
