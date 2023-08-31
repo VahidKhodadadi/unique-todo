@@ -3,10 +3,10 @@
         <template #header>
             <div class="flex flex-row justify-between items-center w-100">
                 <div class="flex items-center justify-between w-100">
-                    <v-icon @click="goBack" size="large" color="black" icon="mdi-arrow-left"></v-icon>
+                    <v-icon @click="goBack" size="large" color="black" :icon="tasksListsStore.configs.country.direction === 'ltr' ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
                     <div class="w-5/6">
                         <v-text-field clearable :value="searchPhrase" @input="searchChangeHandler"
-                            placeholder="Search for tasks" variant="plain"></v-text-field>
+                            :placeholder="tasksListsStore.translate('pages.search.searchForTasks')" variant="plain"></v-text-field>
                     </div>
                     <div></div>
                 </div>
@@ -35,18 +35,18 @@ export default {
     data() {
         return {
             searchPhrase: '',
-            tasksStore: useTasksStore(),
+            tasksListsStore: useTasksStore(),
             searchedTasks: []
         }
     },
     methods: {
         searchChangeHandler(event) {
             this.searchPhrase = event.target.value;
-            this.searchedTasks = this.tasksStore.searchTasks(event.target.value);
+            this.searchedTasks = this.tasksListsStore.searchTasks(event.target.value);
         },
         goToTaskPage(taskId) {
             let currentList = '';
-            for (const list of this.tasksStore.$state.lists) {
+            for (const list of this.tasksListsStore.$state.lists) {
                 const taskIds = list.tasks.map(ts => ts.id);
                 if (taskIds.includes(taskId)) {
                     currentList = list;

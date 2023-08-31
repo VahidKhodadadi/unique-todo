@@ -3,12 +3,12 @@
         <template #header>
             <div class="flex flex-row justify-between items-center w-100">
                 <div></div>
-                <h1 class="text-white text-3xl">Lists</h1>
+                <h1 class="text-white text-3xl">{{ tasksListsStore.translate('pages.lists.lists') }}</h1>
                 <v-icon @click="goToSearchPage" size="large" color="black" icon="mdi-magnify"></v-icon>
             </div>
         </template>
         <template #main>
-            <p v-if="listItems.length == 0" class="text-center">No list added yet, add one!</p>
+            <p v-if="listItems.length == 0" class="text-center">{{ tasksListsStore.translate('pages.lists.noList') }}</p>
             <ul class="flex flex-col justify-center items-center w-100">
                 <li v-for="list in listItems"
                     class="flex w-100 justify-between py-2 border-b-2 border-l-blue-950 hover:cursor-pointer hover:bg-slate-50"
@@ -22,7 +22,8 @@
             </ul>
         </template>
         <template #footer>
-            <v-btn class="w-full sm:w-auto" @click="goToNewListPage" size="large" variant="text" prepend-icon="mdi-plus">New list</v-btn>
+            <v-btn class="w-full sm:w-auto" @click="goToNewListPage" size="large" variant="text" prepend-icon="mdi-plus">{{
+                tasksListsStore.translate('pages.lists.newList') }}</v-btn>
         </template>
     </Layout>
 </template>
@@ -37,7 +38,7 @@ export default {
     },
     data() {
         return {
-            taskListsStore: useTasksStore()
+            tasksListsStore: useTasksStore()
         }
     },
     methods: {
@@ -52,12 +53,12 @@ export default {
             this.$router.push('/search');
         },
         deleteList(listId) {
-            this.taskListsStore.deleteList(listId);
+            this.tasksListsStore.deleteList(listId);
         }
     },
     computed: {
         listItems() {
-            return this.taskListsStore.$state.lists;
+            return this.tasksListsStore.$state.lists;
         }
     }
 }

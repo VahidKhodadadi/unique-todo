@@ -2,8 +2,9 @@
     <Layout>
         <template #header>
             <div class="flex flex-row justify-between items-center w-100">
-                <v-icon @click="goBack" size="large" color="black" icon="mdi-arrow-left"></v-icon>
-                <h1 class="text-white text-3xl">New task</h1>
+                <v-icon @click="goBack" size="large" color="black"
+                    :icon="tasksListsStore.configs.country.direction === 'ltr' ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
+                <h1 class="text-white text-3xl">{{ tasksListsStore.translate('pages.newTask.newTask') }}</h1>
                 <div></div>
             </div>
         </template>
@@ -11,15 +12,16 @@
         <template #main>
             <v-form @submit.prevent="addTask" class="flex flex-col items-center">
                 <v-text-field class="w-100" v-model="taskTitle" :rules="[rules.required]" clearable
-                    label="Enter task title"></v-text-field>
+                    :label="tasksListsStore.translate('pages.newTask.enterTaskTitle')"></v-text-field>
 
                 <v-text-field class="w-100" type="datetime-local" v-model="taskDueDate" clearable
-                    label="Due date"></v-text-field>
+                    :label="tasksListsStore.translate('pages.newTask.dueDate')"></v-text-field>
 
                 <v-text-field class="w-100" type="datetime-local" v-model="taskRemindMeAtDateTime" clearable
-                    label="Remind me at"></v-text-field>
+                    :label="tasksListsStore.translate('pages.newTask.remindMeAt')"></v-text-field>
 
-                <v-btn class="w-full sm:w-auto" color="blue-grey-darken-3" type="submit" size="large">Add task</v-btn>
+                <v-btn class="w-full sm:w-auto" color="blue-grey-darken-3" type="submit" size="large">{{
+                    tasksListsStore.translate('pages.newTask.addTask') }}</v-btn>
             </v-form>
         </template>
     </Layout>
@@ -40,7 +42,7 @@ export default {
             taskDueDate: '',
             taskRemindMeAtDateTime: '',
             rules: {
-                required: value => !!value || 'Field is required',
+                required: value => !!value || this.tasksListsStore.translate('validations.required'),
             },
         }
     },

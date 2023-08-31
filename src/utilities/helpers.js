@@ -1,14 +1,28 @@
-export const saveData = (data) => {
-    localStorage.setItem('tasks_data', JSON.stringify(data));
+export const saveTasksData = (data) => {
+    localStorage.setItem('unique_todo_tasks_data', JSON.stringify(data));
 }
 
-export const loadData = () => {
-    const data = localStorage.getItem('tasks_data');
+export const loadTasksData = () => {
+    const data = localStorage.getItem('unique_todo_tasks_data');
     try {
         return JSON.parse(data || []);
     }
     catch (err) {
         return [];
+    }
+}
+
+export const saveConfigs = (configsData) => {
+    localStorage.setItem('unique_todo_configs', JSON.stringify(configsData));
+}
+
+export const loadConfigs = () => {
+    const data = localStorage.getItem('unique_todo_configs');
+    try {
+        return JSON.parse(data || null);
+    }
+    catch (err) {
+        return null;
     }
 }
 

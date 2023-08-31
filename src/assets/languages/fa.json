@@ -1,0 +1,49 @@
+{
+    "app": {
+        "close": "بستن",
+        "cancel": "لغو",
+        "save": "ذخیره"
+    },
+    "validations": {
+        "required": "فیلد الزامی است"
+    },
+    "pages": {
+        "lists": {
+            "lists": "فهرست‌ها",
+            "noList": "هنوز هیچ فهرستی اضافه نکرده‌اید.",
+            "newList": "فهرست جدید"
+        },
+        "newList": {
+            "newList": "فهرست جدید",
+            "enterListTitle": "عنوان فهرست",
+            "addList": "افزودن"
+        },
+        "tasks": {
+            "noTask": "هنوز هیچ وظیفه‌ای اضافه نکرده‌اید.",
+            "newTask": "وظیفه جدید",
+            "sortBy": "مرتب‌سازی",
+            "copyList": "کپی فهرست",
+            "duplicateList": "تکثیر فهرست",
+            "renameList": "تغییر نام فهرست",
+            "deleteList": "حذف فهرست"
+        },
+        "newTask": {
+            "newTask": "وظیفه جدید",
+            "enterTaskTitle": "عنوان وظیفه",
+            "dueDate": "تاریخ اتمام",
+            "remindMeAt": "تاریخ یادآوری",
+            "addTask": "افزودن"
+        },
+        "task": {
+            "enterStepTitle": "عنوان مرحله",
+            "addStep": "افزودن",
+            "remindMe": "یادآوری کن",
+            "repeat": "تکرار",
+            "addDueDate": "افزودن تاریخ اتمام",
+            "addFile": "بارگزاری فایل"
+        },
+        "search": {
+            "searchForTasks": "جستجوی وظایف"
+        }
+    }
+}

@@ -1,0 +1,49 @@
+{
+    "app": {
+        "close": "Close",
+        "cancel": "Cancel",
+        "save": "Save"
+    },
+    "validations": {
+        "required": "Field is required"
+    },
+    "pages": {
+        "lists": {
+            "lists": "Lists",
+            "noList": "No list added yet, add one!",
+            "newList": "New list"
+        },
+        "newList": {
+            "newList": "New list",
+            "enterListTitle": "Enter list title",
+            "addList": "Add list"
+        },
+        "tasks": {
+            "noTask": "No task added yet, add one!",
+            "newTask": "New task",
+            "sortBy": "Sort by",
+            "copyList": "Copy list",
+            "duplicateList": "Duplicate list",
+            "renameList": "Rename list",
+            "deleteList": "Delete list"
+        },
+        "newTask": {
+            "newTask": "New task",
+            "enterTaskTitle": "Enter task title",
+            "dueDate": "Due date",
+            "remindMeAt": "Remind me at",
+            "addTask": "Add task"
+        },
+        "task": {
+            "enterStepTitle": "Enter step title",
+            "addStep": "Add step",
+            "remindMe": "Remind me",
+            "repeat": "Repeat",
+            "addDueDate": "Add due date",
+            "addFile": "Add file"
+        },
+        "search": {
+            "searchForTasks": "Search for tasks"
+        }
+    }
+}

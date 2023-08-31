@@ -1,15 +1,99 @@
 import { defineStore } from 'pinia';
-import { copyToClipboard, isTaskDueDated, loadData, notifyUser, saveData } from '../utilities/helpers';
+import { copyToClipboard, isTaskDueDated, loadTasksData, notifyUser, saveTasksData, saveConfigs, loadConfigs } from '../utilities/helpers';
 import router from '../router';
+import IranFlag from '../assets/country-flags/iran.png';
+import USAFlag from '../assets/country-flags/united-states-of-america.png';
+
+export const countries = [
+    {
+        name: 'United States',
+        shortName: 'US',
+        direction: 'ltr',
+        language: 'English',
+        lang: 'en',
+        currency: '$',
+        flag: USAFlag
+    },
+    {
+        name: 'Islamic Republic of Iran',
+        shortName: 'Iran',
+        direction: 'rtl',
+        language: 'Persian (Farsi)',
+        lang: 'fa',
+        currency: 'Rial',
+        flag: IranFlag
+    }
+]
 
 export const useTasksStore = defineStore('tasksLists', {
     state: () => ({
-        lists: []
+        lists: [],
+        configs: {
+            country: countries[0],
+            languageData: {}
+        }
     }),
     // getters: {
     //     lists: (state) => state.lists
     // },
     actions: {
+        translate(keyChain) {
+            const tempLanguageData = this.$state.configs.languageData;
+            if (!tempLanguageData) {
+                return '';
+            }
+            const chainArr = keyChain.split('.');
+            const translatedText = chainArr.reduce((previous, current) => {
+                if (!previous[current]) {
+                    return [];
+                }
+                return previous[current];
+            }, tempLanguageData);
+            return translatedText;
+        },
+        setLanguageData(newLanguageData) {
+            this.$state.configs = {
+                ...this.$state.configs,
+                languageData: newLanguageData
+            }
+        },
+        setConfigKey(key, value) {
+            console.log('key', key);
+            console.log('value', value);
+            this.configs[key] = value;
+            const { languageData, ...otherConfigs } = {
+                ...this.configs,
+                [key]: value
+            };
+            console.log('otherConfigs', otherConfigs)
+            saveConfigs(otherConfigs);
+        },
+        saveConfigs() {
+            saveConfigs(this.$state.configs);
+        },
+        loadConfigs() {
+            const configsData = loadConfigs();
+            const langFileName = configsData ? configsData.country.lang : countries[0].lang;
+            import(`../assets/languages/${langFileName}.json`)
+                .then(newLanguageData => {
+                    this.$state.configs = configsData ? {
+                        ...configsData
+                    } : {
+                        country: countries[0]
+                    }
+                    this.$state.configs.languageData = newLanguageData.default;
+                });
+
+        },
+        loadLanguageData() {
+            import(`../assets/languages/${countries[0].lang}.json`)
+                .then(newLanguageData => {
+                    this.$state.configs = {
+                        country: countries[0],
+                        languageData: newLanguageData.default
+                    }
+                });
+        },
         getListById(listId) {
             return this.$state.lists.find(list => list.id == listId);
         },
@@ -27,12 +111,12 @@ export const useTasksStore = defineStore('tasksLists', {
                 tasks: [],
                 title: list.title
             })
-            this.save();
+            this.saveTasks();
         },
         deleteList(listId) {
             const listIndex = this.$state.lists.findIndex(list => list.id == listId);
             this.$state.lists.splice(listIndex, 1);
-            this.save();
+            this.saveTasks();
         },
         addTask(listId, task) {
             const list = this.getListById(listId);
@@ -45,19 +129,19 @@ export const useTasksStore = defineStore('tasksLists', {
                 steps: [],
                 title: task.title
             });
-            this.save();
+            this.saveTasks();
         },
         deleteTask(listId, taskId) {
             const list = this.getListById(listId);
             const taskIndex = list.tasks.findIndex(task => task.id == taskId);
             list.tasks.splice(taskIndex, 1);
-            this.save();
+            this.saveTasks();
         },
         changeTaskStatus(listId, taskId, status) {
             const list = this.getListById(listId);
             const task = this.getTaskById(list, taskId);
             task.completed = status;
-            this.save();
+            this.saveTasks();
         },
         addStep(listId, taskId, stepTitle) {
             const list = this.getListById(listId);
@@ -68,27 +152,27 @@ export const useTasksStore = defineStore('tasksLists', {
                 createdAtDate: new Date().toISOString(),
                 completed: false
             });
-            this.save();
+            this.saveTasks();
         },
         deleteStep(listId, taskId, stepId) {
             const list = this.getListById(listId);
             const task = this.getTaskById(list, taskId);
             const stepIndex = task.steps.findIndex(step => step.id == stepId);
             task.steps.splice(stepIndex, 1);
-            this.save();
+            this.saveTasks();
         },
         changeStepStatus(listId, taskId, stepId, status) {
             const list = this.getListById(listId);
             const task = this.getTaskById(list, taskId);
             const step = this.getStepById(task, stepId);
             step.completed = status;
-            this.save();
+            this.saveTasks();
         },
-        save() {
-            saveData(this.$state.lists);
+        saveTasks() {
+            saveTasksData(this.$state.lists);
         },
-        load() {
-            this.$state.lists = loadData();
+        loadTasks() {
+            this.$state.lists = loadTasksData();
         },
         duplicateList(listId) {
             const list = this.getListById(listId);
@@ -97,12 +181,12 @@ export const useTasksStore = defineStore('tasksLists', {
                 id: Math.ceil(Math.random() * 1000)
             }
             this.$state.lists.push(newList);
-            this.save();
+            this.saveTasks();
         },
         renameList(listId, listName) {
             const list = this.getListById(listId);
             list.title = listName;
-            this.save();
+            this.saveTasks();
         },
         searchTasks(searchPhrase) {
             if (searchPhrase.trim() === '') {

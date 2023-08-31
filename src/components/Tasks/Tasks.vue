@@ -2,7 +2,7 @@
     <Layout>
         <template #header>
             <div class="flex flex-row justify-between items-center w-100">
-                <v-icon @click="goBack" size="large" color="black" icon="mdi-arrow-left"></v-icon>
+                <v-icon @click="goBack" size="large" color="black" :icon="tasksListsStore.configs.country.direction === 'ltr' ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
                 <h1 class="text-white text-3xl">{{ listName }}</h1>
 
                 <v-dialog v-model="showListOptions" width="auto">
@@ -12,22 +12,25 @@
                     <v-card>
                         <v-card-text>
                             <ul class="flex flex-col">
-                                <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">Sort by</li>
-                                <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8" @click="copyList">Send a copy
+                                <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
+                                    tasksListsStore.translate('pages.tasks.sortBy') }}</li>
+                                <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8" @click="copyList">{{
+                                    tasksListsStore.translate('pages.tasks.copyList') }}
                                 </li>
                                 <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8" @click="duplicateList">
-                                    Duplicate list</li>
+                                    {{ tasksListsStore.translate('pages.tasks.duplicateList') }}</li>
 
                                 <v-dialog v-model="showRenameModal" width="auto">
                                     <template v-slot:activator="{ props }">
-                                        <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8" v-bind="props">Rename
-                                            list</li>
+                                        <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8" v-bind="props">{{
+                                            tasksListsStore.translate('pages.tasks.renameList') }}</li>
                                     </template>
 
                                     <v-card>
                                         <v-card-text>
                                             <div class="flex flex-col items-center justify-start">
-                                                <h3 class="mb-2">Rename list</h3>
+                                                <h3 class="mb-2">{{ tasksListsStore.translate('pages.tasks.renameList') }}
+                                                </h3>
                                                 <v-text-field class="w-100" v-model="listTitle" :rules="[rules.required]"
                                                     clearable label="Rename list"></v-text-field>
                                             </div>
@@ -35,21 +38,23 @@
                                         <v-card-actions>
                                             <div class="flex items-center justify-evenly mt-2 w-100">
                                                 <v-btn color="blue-grey-darken-3" @click="showRenameModal = false"
-                                                    size="large" variant="text">Cancel</v-btn>
-                                                <v-btn color="blue-grey-darken-3" @click="renameList"
-                                                    size="large">Save</v-btn>
+                                                    size="large" variant="text">{{ tasksListsStore.translate('app.cancel')
+                                                    }}</v-btn>
+                                                <v-btn color="blue-grey-darken-3" @click="renameList" size="large">{{
+                                                    tasksListsStore.translate('app.save') }}</v-btn>
                                             </div>
                                         </v-card-actions>
                                     </v-card>
                                 </v-dialog>
 
-                                <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8" @click="deleteList">Delete list
+                                <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8" @click="deleteList">{{
+                                    tasksListsStore.translate('pages.tasks.deleteList') }}
                                 </li>
-                                <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">Change theme</li>
                             </ul>
                         </v-card-text>
                         <v-card-actions>
-                            <v-btn color="primary" block @click="showListOptions = false">Close</v-btn>
+                            <v-btn color="primary" block @click="showListOptions = false">{{
+                                tasksListsStore.translate('app.close') }}</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
@@ -57,7 +62,7 @@
         </template>
 
         <template #main>
-            <p v-if="tasks.length == 0" class="text-center">No task added yet, add one!</p>
+            <p v-if="tasks.length == 0" class="text-center">{{ tasksListsStore.translate('pages.tasks.noTask') }}</p>
             <ul class="flex flex-col items-start" v-if="tasks.length > 0">
                 <li v-for="task in tasks"
                     class="flex w-100 justify-between py-2 border-b-2 border-l-blue-950 hover:cursor-pointer hover:bg-slate-50"
@@ -80,7 +85,8 @@
         </template>
 
         <template #footer>
-            <v-btn class="w-full sm:w-auto" @click="goToNewTaskPage(listId)" size="large" variant="text" prepend-icon="mdi-plus">New task</v-btn>
+            <v-btn class="w-full sm:w-auto" @click="goToNewTaskPage(listId)" size="large" variant="text"
+                prepend-icon="mdi-plus">{{ tasksListsStore.translate('pages.tasks.newTask') }}</v-btn>
         </template>
     </Layout>
 </template>
@@ -101,7 +107,7 @@ export default {
             showListOptions: false,
             listTitle: '',
             rules: {
-                required: value => !!value || 'Field is required',
+                required: value => !!value || this.tasksListsStore.translate('validations.required'),
             },
         }
     },

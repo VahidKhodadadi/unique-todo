@@ -2,7 +2,7 @@
     <Layout>
         <template #header>
             <div class="flex flex-row justify-between items-center w-100">
-                <v-icon @click="goBack" size="large" color="black" icon="mdi-arrow-left"></v-icon>
+                <v-icon @click="goBack" size="large" color="black" :icon="tasksListsStore.configs.country.direction === 'ltr' ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
                 <h1 class="text-white text-3xl">{{ list.title }}</h1>
                 <div></div>
             </div>
@@ -26,14 +26,19 @@
                         <v-card>
                             <v-card-text>
                                 <ul class="flex flex-col">
-                                    <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">Remind me</li>
-                                    <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">Repeat</li>
-                                    <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">Add due date</li>
-                                    <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">Add file</li>
+                                    <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
+                                        tasksListsStore.translate('pages.task.remindMe') }}</li>
+                                    <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
+                                        tasksListsStore.translate('pages.task.repeat') }}</li>
+                                    <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
+                                        tasksListsStore.translate('pages.task.addDueDate') }}</li>
+                                    <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
+                                        tasksListsStore.translate('pages.task.addFile') }}</li>
                                 </ul>
                             </v-card-text>
                             <v-card-actions>
-                                <v-btn color="primary" block @click="showTaskOptions = false">Close</v-btn>
+                                <v-btn color="primary" block @click="showTaskOptions = false">{{
+                                    tasksListsStore.translate('app.close') }}</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
@@ -62,7 +67,8 @@
                                     </ul>
                                 </v-card-text>
                                 <v-card-actions>
-                                    <v-btn color="primary" block @click="showStepOptions = false">Close</v-btn>
+                                    <v-btn color="primary" block @click="showStepOptions = false">{{
+                                        tasksListsStore.translate('app.close') }}</v-btn>
                                 </v-card-actions>
                             </v-card>
                         </v-dialog>
@@ -70,9 +76,9 @@
                 </ul>
                 <v-form @submit.prevent="addNewStep()" class="w-100 px-3 d-flex flex-col items-center">
                     <v-text-field class="w-100" v-model="newStepTitle" clearable
-                        placeholder="Enter new step"></v-text-field>
+                        :placeholder="tasksListsStore.translate('pages.task.enterStepTitle')"></v-text-field>
                     <v-btn class="w-full sm:w-auto" color="blue-grey-darken-3" type="submit" size="large"
-                        prepend-icon="mdi-plus">Add step</v-btn>
+                        prepend-icon="mdi-plus">{{ tasksListsStore.translate('pages.task.addStep') }}</v-btn>
                 </v-form>
             </div>
         </template>
@@ -99,14 +105,14 @@ export default {
     data() {
         return {
             newStepTitle: '',
-            tasksStore: useTasksStore(),
+            tasksListsStore: useTasksStore(),
             showTaskOptions: false,
             showStepOptions: false
         }
     },
     computed: {
         list() {
-            return this.tasksStore.$state.lists.find(list => list.id == this.$props.listId);
+            return this.tasksListsStore.$state.lists.find(list => list.id == this.$props.listId);
         },
         task() {
             return this.list.tasks.find(ts => ts.id == this.$props.taskId);
@@ -118,7 +124,7 @@ export default {
                 console.error('Enter a valid step title!');
                 return;
             }
-            this.tasksStore.addStep(this.$props.listId, this.$props.taskId, this.newStepTitle);
+            this.tasksListsStore.addStep(this.$props.listId, this.$props.taskId, this.newStepTitle);
             this.newStepTitle = '';
         },
         goBack() {
@@ -126,20 +132,20 @@ export default {
         },
         deleteTask() {
             this.$router.push('/lists');
-            this.tasksStore.deleteTask(this.$props.listId, this.$props.taskId);
+            this.tasksListsStore.deleteTask(this.$props.listId, this.$props.taskId);
             // this.$router.push({ path: `/tasks/${this.$props.listId}`, params: { listId: this.$props.listId } });
         },
         deleteStep(stepId) {
-            this.tasksStore.deleteStep(this.$props.listId, this.$props.taskId, stepId);
+            this.tasksListsStore.deleteStep(this.$props.listId, this.$props.taskId, stepId);
         },
         changeTaskStatus(status) {
-            this.tasksStore.changeTaskStatus(this.$props.listId, this.$props.taskId, status);
+            this.tasksListsStore.changeTaskStatus(this.$props.listId, this.$props.taskId, status);
         },
         changeStepStatus(stepId, status) {
-            this.tasksStore.changeStepStatus(this.$props.listId, this.$props.taskId, stepId, status);
+            this.tasksListsStore.changeStepStatus(this.$props.listId, this.$props.taskId, stepId, status);
         },
         promoteToTask(stepId) {
-            this.tasksStore.convertStepToTask(this.$props.listId, this.$props.taskId, stepId);
+            this.tasksListsStore.convertStepToTask(this.$props.listId, this.$props.taskId, stepId);
         },
         isTaskDueDated,
         createdAtRelativeTime() {

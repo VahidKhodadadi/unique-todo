@@ -2,8 +2,8 @@
     <Layout>
         <template #header>
             <div class="flex flex-row justify-between items-center w-100">
-                <v-icon @click="goBack" size="large" color="black" icon="mdi-arrow-left"></v-icon>
-                <h1 class="text-white text-3xl">New List</h1>
+                <v-icon @click="goBack" size="large" color="black" :icon="tasksListsStore.configs.country.direction === 'ltr' ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
+                <h1 class="text-white text-3xl">{{ tasksListsStore.translate('pages.newList.newList') }}</h1>
                 <div></div>
             </div>
         </template>
@@ -11,7 +11,7 @@
         <template #main>
             <v-form class="flex flex-col items-start gap-2" @submit.prevent="addList">
                 <v-text-field class="w-100" v-model="listTitle" :rules="[rules.required]" clearable
-                    label="Enter list title"></v-text-field>
+                    :label="tasksListsStore.translate('pages.newList.enterListTitle')"></v-text-field>
 
                 <!-- <ul class="w-100 flex items-center justify-evenly mb-3 gap-1 list-none">
                     <li @click="selectColor(color)" v-for="color in listColors" :style="{ backgroundColor: color }"
@@ -20,8 +20,9 @@
                 </ul> -->
 
                 <!-- <div class="flex items-center justify-around w-100"> -->
-                    <!-- <v-btn color="blue-grey-darken-3" @click="goToTasksListPage" size="large" variant="text">Cancel</v-btn> -->
-                    <v-btn class="w-full sm:w-auto" color="blue-grey-darken-3" type="submit" size="large">Add list</v-btn>
+                <!-- <v-btn color="blue-grey-darken-3" @click="goToTasksListPage" size="large" variant="text">Cancel</v-btn> -->
+                <v-btn class="w-full sm:w-auto" color="blue-grey-darken-3" type="submit" size="large">{{
+                    tasksListsStore.translate('pages.newList.addList') }}</v-btn>
                 <!-- </div> -->
             </v-form>
         </template>
@@ -45,7 +46,7 @@ export default {
             listTitle: '',
             // listColor: listColors[1],
             rules: {
-                required: value => !!value || 'Field is required',
+                required: value => !!value || this.tasksListsStore.translate('validations.required'),
             },
         }
     },
@@ -61,9 +62,10 @@ export default {
                 console.error('Enter a valid title!');
                 return;
             }
-            this.tasksListsStore.addList({ title: this.listTitle
-                    // color: this.listColor 
-                });
+            this.tasksListsStore.addList({
+                title: this.listTitle
+                // color: this.listColor 
+            });
             this.$router.push('/lists');
         },
         goBack() {
