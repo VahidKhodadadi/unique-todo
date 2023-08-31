@@ -80,7 +80,7 @@
         </template>
 
         <template #footer>
-            <v-btn @click="goToNewTaskPage(listId)" size="large" variant="text" prepend-icon="mdi-plus">Add task</v-btn>
+            <v-btn class="w-full sm:w-auto" @click="goToNewTaskPage(listId)" size="large" variant="text" prepend-icon="mdi-plus">New task</v-btn>
         </template>
     </Layout>
 </template>

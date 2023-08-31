@@ -19,10 +19,10 @@
                     </li>
                 </ul> -->
 
-                <div class="flex items-center justify-around w-100">
-                    <v-btn color="blue-grey-darken-3" @click="goToTasksListPage" size="large" variant="text">Cancel</v-btn>
-                    <v-btn color="blue-grey-darken-3" type="submit" size="large">Create list</v-btn>
-                </div>
+                <!-- <div class="flex items-center justify-around w-100"> -->
+                    <!-- <v-btn color="blue-grey-darken-3" @click="goToTasksListPage" size="large" variant="text">Cancel</v-btn> -->
+                    <v-btn class="w-full sm:w-auto" color="blue-grey-darken-3" type="submit" size="large">Add list</v-btn>
+                <!-- </div> -->
             </v-form>
         </template>
 
@@ -50,9 +50,9 @@ export default {
         }
     },
     methods: {
-        goToTasksListPage() {
-            this.$router.push('/lists');
-        },
+        // goToTasksListPage() {
+        //     this.$router.push('/lists');
+        // },
         // selectColor(color) {
         //     this.listColor = color;
         // },

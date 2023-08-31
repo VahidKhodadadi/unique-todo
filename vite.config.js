@@ -21,8 +21,18 @@ export default defineConfig({
         theme_color: '#ffffff',
         icons: [
           {
-            src: 'favicon-144.png',
-            sizes: '144x144',
+            src: 'favicon-16.png',
+            sizes: '16x16',
+            type: 'image/png'
+          },
+          {
+            src: 'favicon-32.png',
+            sizes: '32x32',
+            type: 'image/png'
+          },
+          {
+            src: 'favicon-64.png',
+            sizes: '64x64',
             type: 'image/png'
           },
           {
@@ -31,10 +41,20 @@ export default defineConfig({
             type: 'image/png'
           },
           {
-            src: 'favicon-32.png',
-            sizes: '32x32',
+            src: 'favicon-128.png',
+            sizes: '128x128',
             type: 'image/png'
-          }
+          },
+          {
+            src: 'favicon-256.png',
+            sizes: '256x256',
+            type: 'image/png'
+          },
+          {
+            src: 'favicon-512.png',
+            sizes: '512x512',
+            type: 'image/png'
+          },
         ]
       }
     })

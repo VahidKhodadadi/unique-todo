@@ -19,7 +19,7 @@
                 <v-text-field class="w-100" type="datetime-local" v-model="taskRemindMeAtDateTime" clearable
                     label="Remind me at"></v-text-field>
 
-                <v-btn color="blue-grey-darken-3" type="submit" size="large">Add task</v-btn>
+                <v-btn class="w-full sm:w-auto" color="blue-grey-darken-3" type="submit" size="large">Add task</v-btn>
             </v-form>
         </template>
     </Layout>

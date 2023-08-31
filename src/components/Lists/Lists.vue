@@ -22,7 +22,7 @@
             </ul>
         </template>
         <template #footer>
-            <v-btn @click="goToNewListPage" size="large" variant="text" prepend-icon="mdi-plus">New list</v-btn>
+            <v-btn class="w-full sm:w-auto" @click="goToNewListPage" size="large" variant="text" prepend-icon="mdi-plus">New list</v-btn>
         </template>
     </Layout>
 </template>

@@ -71,8 +71,8 @@
                 <v-form @submit.prevent="addNewStep()" class="w-100 px-3 d-flex flex-col items-center">
                     <v-text-field class="w-100" v-model="newStepTitle" clearable
                         placeholder="Enter new step"></v-text-field>
-                    <v-btn color="blue-grey-darken-3" type="submit" size="large" prepend-icon="mdi-plus">Add
-                        step</v-btn>
+                    <v-btn class="w-full sm:w-auto" color="blue-grey-darken-3" type="submit" size="large"
+                        prepend-icon="mdi-plus">Add step</v-btn>
                 </v-form>
             </div>
         </template>
