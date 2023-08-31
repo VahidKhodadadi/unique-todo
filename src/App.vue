@@ -26,7 +26,7 @@
           </ul>
         </div>
       </div>
-      <div style="height: calc(100% - 40px)">
+      <div :style="{ height: 'calc(100% - 40px)', maxHeight: 'calc(100% - 40px)' }">
         <Transition name="fade">
           <component :is="Component" />
         </Transition>
