@@ -9,28 +9,28 @@
         </template>
 
         <template #main>
-            <div class="flex flex-col items-start gap-2">
+            <v-form class="flex flex-col items-start gap-2" @submit.prevent="addList">
                 <v-text-field class="w-100" v-model="listTitle" :rules="[rules.required]" clearable
                     label="Enter list title"></v-text-field>
 
-                <ul class="w-100 flex items-center justify-evenly mb-3 gap-1 list-none">
+                <!-- <ul class="w-100 flex items-center justify-evenly mb-3 gap-1 list-none">
                     <li @click="selectColor(color)" v-for="color in listColors" :style="{ backgroundColor: color }"
                         class="w-[30px] h-[30px] rounded-full border-4" :class="listColor === color ? 'border-slate-700' : 'border-transparent'">
                     </li>
-                </ul>
+                </ul> -->
 
                 <div class="flex items-center justify-around w-100">
                     <v-btn color="blue-grey-darken-3" @click="goToTasksListPage" size="large" variant="text">Cancel</v-btn>
-                    <v-btn color="blue-grey-darken-3" @click="addList" size="large">Create list</v-btn>
+                    <v-btn color="blue-grey-darken-3" type="submit" size="large">Create list</v-btn>
                 </div>
-            </div>
+            </v-form>
         </template>
 
     </Layout>
 </template>
 
 <script>
-import { listColors } from '../data/data';
+// import { listColors } from '../data/data';
 import { useTasksStore } from '../../store/tasks';
 import Layout from '../UI/Layout/Layout.vue';
 
@@ -41,9 +41,9 @@ export default {
     data() {
         return {
             tasksListsStore: useTasksStore(),
-            listColors,
+            // listColors,
             listTitle: '',
-            listColor: listColors[1],
+            // listColor: listColors[1],
             rules: {
                 required: value => !!value || 'Field is required',
             },
@@ -53,15 +53,17 @@ export default {
         goToTasksListPage() {
             this.$router.push('/lists');
         },
-        selectColor(color) {
-            this.listColor = color;
-        },
+        // selectColor(color) {
+        //     this.listColor = color;
+        // },
         addList() {
             if (this.listTitle.trim() === '') {
                 console.error('Enter a valid title!');
                 return;
             }
-            this.tasksListsStore.addList({ title: this.listTitle, color: this.listColor });
+            this.tasksListsStore.addList({ title: this.listTitle
+                    // color: this.listColor 
+                });
             this.$router.push('/lists');
         },
         goBack() {

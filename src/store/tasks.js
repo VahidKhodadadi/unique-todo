@@ -22,7 +22,7 @@ export const useTasksStore = defineStore('tasksLists', {
         addList(list) {
             this.$state.lists.push({
                 id: Math.ceil(Math.random() * 1000),
-                color: list.color,
+                // color: list.color,
                 createdAtDate: new Date().toISOString(),
                 tasks: [],
                 title: list.title

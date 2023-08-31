@@ -9,7 +9,7 @@
         </template>
 
         <template #main>
-            <div class="flex flex-col items-center">
+            <v-form @submit.prevent="addTask" class="flex flex-col items-center">
                 <v-text-field class="w-100" v-model="taskTitle" :rules="[rules.required]" clearable
                     label="Enter task title"></v-text-field>
 
@@ -19,8 +19,8 @@
                 <v-text-field class="w-100" type="datetime-local" v-model="taskRemindMeAtDateTime" clearable
                     label="Remind me at"></v-text-field>
 
-                <v-btn color="blue-grey-darken-3" @click="addTask" size="large">Create task</v-btn>
-            </div>
+                <v-btn color="blue-grey-darken-3" type="submit" size="large">Add task</v-btn>
+            </v-form>
         </template>
     </Layout>
 </template>
