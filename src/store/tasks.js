@@ -58,14 +58,11 @@ export const useTasksStore = defineStore('tasksLists', {
             }
         },
         setConfigKey(key, value) {
-            console.log('key', key);
-            console.log('value', value);
             this.configs[key] = value;
             const { languageData, ...otherConfigs } = {
                 ...this.configs,
                 [key]: value
             };
-            console.log('otherConfigs', otherConfigs)
             saveConfigs(otherConfigs);
         },
         saveConfigs() {

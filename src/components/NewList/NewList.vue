@@ -59,7 +59,7 @@ export default {
         // },
         addList() {
             if (this.listTitle.trim() === '') {
-                console.error('Enter a valid title!');
+                // console.error('Enter a valid title!');
                 return;
             }
             this.tasksListsStore.addList({

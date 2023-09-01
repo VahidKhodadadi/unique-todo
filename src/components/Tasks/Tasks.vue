@@ -79,7 +79,7 @@
 
                     <div>
                         <v-checkbox v-model="task.completed" @click.stop="changeTaskStatus(task.id, !task.completed)"
-                            hide-details="true"></v-checkbox>
+                            hide-details></v-checkbox>
                     </div>
                 </li>
             </ul>
@@ -156,7 +156,7 @@ export default {
         },
         renameList() {
             if (this.listTitle.trim() === '') {
-                console.error('Error! Enter a valid title!');
+                // console.error('Error! Enter a valid title!');
                 return;
             }
             this.tasksListsStore.renameList(this.listId, this.listTitle);

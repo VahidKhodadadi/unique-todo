@@ -52,7 +52,7 @@ export default {
         },
         addTask() {
             if (this.taskTitle.trim() === '') {
-                console.error('Enter a valid title!');
+                // console.error('Enter a valid title!');
                 return;
             }
             this.tasksListsStore.addTask(this.listId, {

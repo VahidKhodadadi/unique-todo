@@ -13,7 +13,7 @@
             <div class="flex flex-col items-start">
                 <div class="flex items-center justify-between w-100">
                     <div class="flex justify-start items-center">
-                        <v-checkbox hide-details="true" v-model="task.completed"
+                        <v-checkbox hide-details v-model="task.completed"
                             @click="changeTaskStatus(!task.completed)"></v-checkbox>
                         <div v-if="isTaskDueDated(task)"><v-icon v-if="isTaskDueDated(task)" size="large" color="orange"
                                 icon="mdi-alert"></v-icon></div>
@@ -40,15 +40,9 @@
                                                     <h3 class="mb-2">{{ tasksListsStore.translate('pages.task.remindMeAt')
                                                     }}
                                                     </h3>
-                                                    <!-- <v-text-field class="w-100" type="datetime-local" v-model="taskDueDate" clearable
-                    :label="tasksListsStore.translate('pages.newTask.dueDate')"></v-text-field> -->
-
                                                     <v-text-field class="w-100" type="datetime-local"
                                                         v-model="remindMeDateTime" clearable
                                                         :label="tasksListsStore.translate('pages.task.remindMeAt')"></v-text-field>
-                                                    <!-- <v-text-field class="w-100" v-model=""
-                                                        :rules="[rules.required]"
-                                                        :label="tasksListsStore.translate('pages.tasks.renameList')"></v-text-field> -->
                                                 </div>
                                             </v-card-text>
                                             <v-card-actions>
@@ -65,11 +59,6 @@
                                         </v-card>
                                     </v-dialog>
 
-
-
-
-
-
                                     <v-dialog v-model="showAddDueDateModal" width="auto">
                                         <template v-slot:activator="{ props }">
                                             <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8"
@@ -83,15 +72,9 @@
                                                     <h3 class="mb-2">{{ tasksListsStore.translate('pages.task.dueDate')
                                                     }}
                                                     </h3>
-                                                    <!-- <v-text-field class="w-100" type="datetime-local" v-model="taskDueDate" clearable
-                    :label="tasksListsStore.translate('pages.newTask.dueDate')"></v-text-field> -->
-
                                                     <v-text-field class="w-100" type="datetime-local" v-model="dueDate"
                                                         clearable
                                                         :label="tasksListsStore.translate('pages.task.dueDate')"></v-text-field>
-                                                    <!-- <v-text-field class="w-100" v-model=""
-                                                        :rules="[rules.required]"
-                                                        :label="tasksListsStore.translate('pages.tasks.renameList')"></v-text-field> -->
                                                 </div>
                                             </v-card-text>
                                             <v-card-actions>
@@ -127,7 +110,7 @@
                     <li v-if="Boolean(task)" v-for="step in task.steps" class="flex items-center justify-between w-100"
                         :key="step.id">
                         <div class="flex items-center justify-start w-100">
-                            <v-checkbox v-model="step.completed" hide-details="true"
+                            <v-checkbox v-model="step.completed" hide-details
                                 @click="changeStepStatus(step.id, !step.completed)"></v-checkbox>
                             <p class="py-3 w-100 ml-3">{{ step.title }}</p>
                         </div>
