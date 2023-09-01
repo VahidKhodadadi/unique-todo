@@ -6,7 +6,7 @@
                     :icon="tasksListsStore.configs.country.direction === 'ltr' ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
                 <h1 class="text-white text-3xl">{{ listName }}</h1>
 
-                <v-dialog v-model="showListOptions" width="auto">
+                <v-dialog v-show="showListOptions" width="auto">
                     <template v-slot:activator="{ props }">
                         <v-icon v-bind="props" size="large" color="black" icon="mdi-dots-vertical"></v-icon>
                     </template>
@@ -28,7 +28,7 @@
                                     <p>{{ tasksListsStore.translate('pages.tasks.duplicateList') }}</p>
                                 </li>
 
-                                <v-dialog v-model="showRenameModal" width="auto">
+                                <v-dialog v-show="showRenameModal" width="auto">
                                     <template v-slot:activator="{ props }">
                                         <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
                                             v-bind="props">

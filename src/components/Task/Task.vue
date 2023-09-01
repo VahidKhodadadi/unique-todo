@@ -20,14 +20,14 @@
                         <p class="mx-3 text-slate-800 font-semibold">{{ task.title }}</p>
                     </div>
 
-                    <v-dialog v-model="showTaskOptions" width="auto">
+                    <v-dialog v-show="showTaskOptions" width="auto">
                         <template v-slot:activator="{ props }">
                             <v-icon v-bind="props" size="large" color="black" icon="mdi-dots-vertical"></v-icon>
                         </template>
                         <v-card>
                             <v-card-text>
                                 <ul class="flex flex-col">
-                                    <v-dialog v-model="showRemindModal" width="auto">
+                                    <v-dialog v-show="showRemindModal" width="auto">
                                         <template v-slot:activator="{ props }">
                                             <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
                                                 @click="showRemindModal = true">
@@ -62,7 +62,7 @@
                                         </v-card>
                                     </v-dialog>
 
-                                    <v-dialog v-model="showAddDueDateModal" width="auto">
+                                    <v-dialog v-show="showAddDueDateModal" width="auto">
                                         <template v-slot:activator="{ props }">
                                             <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
                                                 @click="showAddDueDateModal = true">
@@ -97,7 +97,7 @@
                                         </v-card>
                                     </v-dialog>
 
-                                    <v-dialog v-model="showRenameModal" width="auto">
+                                    <v-dialog v-show="showRenameModal" width="auto">
                                         <template v-slot:activator="{ props }">
                                             <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
                                                 v-bind="props">
@@ -162,7 +162,7 @@
                             <p class="py-3 w-100 mx-3">{{ step.title }}</p>
                         </div>
 
-                        <v-dialog v-model="showStepOptions" width="auto">
+                        <v-dialog v-show="showStepOptions" width="auto">
                             <template v-slot:activator="{ props }">
                                 <v-icon v-bind="props" size="large" color="black" icon="mdi-dots-vertical"></v-icon>
                             </template>

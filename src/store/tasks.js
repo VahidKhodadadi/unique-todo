@@ -133,6 +133,7 @@ export const useTasksStore = defineStore('tasksLists', {
             const list = this.getListById(listId);
             const task = this.getTaskById(list, taskId);
             task[taskKey] = taskValue;
+            this.saveTasks();
         },
         deleteTask(listId, taskId) {
             const list = this.getListById(listId);
@@ -227,6 +228,7 @@ export const useTasksStore = defineStore('tasksLists', {
                 steps: []
             }
             list.tasks.push(newTask);
+            this.saveTasks();
         },
         checkForDueDatedTasks() {
             for (const list of this.$state.lists) {
