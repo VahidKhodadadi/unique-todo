@@ -29,9 +29,12 @@
                                 <ul class="flex flex-col">
                                     <v-dialog v-model="showRemindModal" width="auto">
                                         <template v-slot:activator="{ props }">
-                                            <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8"
+                                            <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
                                                 @click="showRemindModal = true">
-                                                {{ tasksListsStore.translate('pages.task.remindMe') }}</li>
+                                                <v-icon class="ml-3" size="large" color="black"
+                                                    icon="mdi-alarm-snooze"></v-icon>
+                                                <p>{{ tasksListsStore.translate('pages.task.remindMe') }}</p>
+                                            </li>
                                         </template>
 
                                         <v-card>
@@ -61,9 +64,12 @@
 
                                     <v-dialog v-model="showAddDueDateModal" width="auto">
                                         <template v-slot:activator="{ props }">
-                                            <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8"
+                                            <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
                                                 @click="showAddDueDateModal = true">
-                                                {{ tasksListsStore.translate('pages.task.addDueDate') }}</li>
+                                                <v-icon class="ml-3" size="large" color="black"
+                                                    icon="mdi-calendar-clock"></v-icon>
+                                                <p>{{ tasksListsStore.translate('pages.task.addDueDate') }}</p>
+                                            </li>
                                         </template>
 
                                         <v-card>
@@ -123,11 +129,17 @@
                                 <v-card-text>
                                     <ul class="flex flex-col">
                                         <li @click="promoteToTask(step.id)"
-                                            class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
-                                                tasksListsStore.translate('pages.task.promoteToTask') }}</li>
+                                            class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center">
+                                            <v-icon class="ml-3" size="large" color="black"
+                                                icon="mdi-arrow-top-left"></v-icon>
+                                            <p>{{ tasksListsStore.translate('pages.task.promoteToTask') }}</p>
+                                        </li>
                                         <li @click="deleteStep(step.id)"
-                                            class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
-                                                tasksListsStore.translate('pages.task.deleteStep') }}</li>
+                                            class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center">
+                                            <v-icon class="ml-3" size="large" color="black"
+                                                icon="mdi-trash-can-outline"></v-icon>
+                                            <p>{{ tasksListsStore.translate('pages.task.deleteStep') }}</p>
+                                        </li>
                                     </ul>
                                 </v-card-text>
                                 <v-card-actions>
@@ -138,7 +150,7 @@
                         </v-dialog>
                     </li>
                 </ul>
-                <v-form @submit.prevent="addNewStep()" class="w-100 px-3 d-flex flex-col items-center">
+                <v-form @submit.prevent="addNewStep()" class="w-100 px-3 flex flex-col items-center">
                     <v-text-field class="w-100" v-model="newStepTitle" clearable :rules="[rules.required]"
                         :placeholder="tasksListsStore.translate('pages.task.enterStepTitle')"></v-text-field>
                     <v-btn class="w-full sm:w-auto" color="blue-grey-darken-3" type="submit" size="large"
@@ -238,10 +250,14 @@ export default {
             }
         },
         setTaskRemindDateTime() {
-            updateTask(this.listId, this.taskId, 'remindMeAtDateTime', this.remindMeDateTime);
+            this.tasksListsStore.updateTask(this.listId, this.taskId, 'remindMeAtDateTime', this.remindMeDateTime);
+            this.showTaskOptions = false;
+            this.showRemindModal = false;
         },
         setTaskDueDate() {
-            updateTask(this.listId, this.taskId, 'dueDate', this.dueDate);
+            this.tasksListsStore.updateTask(this.listId, this.taskId, 'dueDate', this.dueDate);
+            this.showTaskOptions = false;
+            this.showAddDueDateModal = false;
         }
     }
 }

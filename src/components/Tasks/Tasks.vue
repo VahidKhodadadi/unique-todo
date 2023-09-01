@@ -15,16 +15,24 @@
                             <ul class="flex flex-col">
                                 <!-- <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
                                     tasksListsStore.translate('pages.tasks.sortBy') }}</li> -->
-                                <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8" @click="copyList">{{
-                                    tasksListsStore.translate('pages.tasks.copyList') }}
+                                <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
+                                    @click="copyList">
+                                    <v-icon class="ml-3" size="large" color="black" icon="mdi-content-copy"></v-icon>
+                                    <p>{{ tasksListsStore.translate('pages.tasks.copyList') }}</p>
                                 </li>
-                                <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8" @click="duplicateList">
-                                    {{ tasksListsStore.translate('pages.tasks.duplicateList') }}</li>
+                                <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
+                                    @click="duplicateList">
+                                    <v-icon class="ml-3" size="large" color="black" icon="mdi-content-duplicate"></v-icon>
+                                    <p>{{ tasksListsStore.translate('pages.tasks.duplicateList') }}</p>
+                                </li>
 
                                 <v-dialog v-model="showRenameModal" width="auto">
                                     <template v-slot:activator="{ props }">
-                                        <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8" v-bind="props">{{
-                                            tasksListsStore.translate('pages.tasks.renameList') }}</li>
+                                        <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
+                                            v-bind="props">
+                                            <v-icon class="ml-3" size="large" color="black" icon="mdi-rename"></v-icon>
+                                            <p>{{ tasksListsStore.translate('pages.tasks.renameList') }}</p>
+                                        </li>
                                     </template>
 
                                     <v-card>
@@ -41,15 +49,18 @@
                                                 <v-btn color="blue-grey-darken-3" @click="showRenameModal = false"
                                                     size="large" variant="text">{{ tasksListsStore.translate('app.cancel')
                                                     }}</v-btn>
-                                                <v-btn variant="elevated" color="blue-grey-darken-3" @click="renameList" size="large">{{
-                                                    tasksListsStore.translate('app.save') }}</v-btn>
+                                                <v-btn variant="elevated" color="blue-grey-darken-3" @click="renameList"
+                                                    size="large">{{
+                                                        tasksListsStore.translate('app.save') }}</v-btn>
                                             </div>
                                         </v-card-actions>
                                     </v-card>
                                 </v-dialog>
 
-                                <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8" @click="deleteList">{{
-                                    tasksListsStore.translate('pages.tasks.deleteList') }}
+                                <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
+                                    @click="deleteList">
+                                    <v-icon class="ml-3" size="large" color="black" icon="mdi-trash-can-outline"></v-icon>
+                                    <p>{{ tasksListsStore.translate('pages.tasks.deleteList') }}</p>
                                 </li>
                             </ul>
                         </v-card-text>
@@ -127,10 +138,10 @@ export default {
             return this.$route.params.listId;
         },
         listName() {
-            return this.tasksListsStore.$state.lists.find(list => list.id == this.listId).title;
+            return this.tasksListsStore.$state.lists.find(list => list.id == this.listId)?.title || '';
         },
         tasks() {
-            return this.tasksListsStore.$state.lists.find(list => list.id == this.listId).tasks;
+            return this.tasksListsStore.$state.lists.find(list => list.id == this.listId)?.tasks || [];
         }
     },
     methods: {
@@ -149,6 +160,7 @@ export default {
         },
         deleteList() {
             this.tasksListsStore.deleteList(this.listId);
+            this.$router.replace('/');
         },
         duplicateList() {
             this.tasksListsStore.duplicateList(this.listId);
