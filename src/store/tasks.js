@@ -191,6 +191,12 @@ export const useTasksStore = defineStore('tasksLists', {
             list.title = listName;
             this.saveTasks();
         },
+        renameTask(listId, taskId, taskName) {
+            const list = this.getListById(listId);
+            const task = this.getTaskById(list, taskId);
+            task.title = taskName;
+            this.saveTasks();
+        },
         searchTasks(searchPhrase) {
             if (searchPhrase.trim() === '') {
                 return [];

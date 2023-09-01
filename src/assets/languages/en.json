@@ -48,7 +48,10 @@
             "promoteToTask": "Promote to task",
             "deleteStep": "Delete step",
             "remindMeAt": "Remind me at",
-            "dueDate": "Due date"
+            "dueDate": "Due date",
+            "deleteTask": "Delete task",
+            "renameTask": "Rename task",
+            "taskName": "Task name"
         },
         "search": {
             "searchForTasks": "Search for tasks"

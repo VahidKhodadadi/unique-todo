@@ -31,7 +31,7 @@
                                         <template v-slot:activator="{ props }">
                                             <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
                                                 @click="showRemindModal = true">
-                                                <v-icon class="ml-3" size="large" color="black"
+                                                <v-icon :class="isRTL ? 'ml-3' : 'mr-3'" size="large" color="black"
                                                     icon="mdi-alarm-snooze"></v-icon>
                                                 <p>{{ tasksListsStore.translate('pages.task.remindMe') }}</p>
                                             </li>
@@ -66,7 +66,7 @@
                                         <template v-slot:activator="{ props }">
                                             <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
                                                 @click="showAddDueDateModal = true">
-                                                <v-icon class="ml-3" size="large" color="black"
+                                                <v-icon :class="isRTL ? 'ml-3' : 'mr-3'" size="large" color="black"
                                                     icon="mdi-calendar-clock"></v-icon>
                                                 <p>{{ tasksListsStore.translate('pages.task.addDueDate') }}</p>
                                             </li>
@@ -96,6 +96,47 @@
                                             </v-card-actions>
                                         </v-card>
                                     </v-dialog>
+
+                                    <v-dialog v-model="showRenameModal" width="auto">
+                                        <template v-slot:activator="{ props }">
+                                            <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
+                                                v-bind="props">
+                                                <v-icon :class="isRTL ? 'ml-3' : 'mr-3'" size="large" color="black" icon="mdi-rename"></v-icon>
+                                                <p>{{ tasksListsStore.translate('pages.task.renameTask') }}</p>
+                                            </li>
+                                        </template>
+
+                                        <v-card>
+                                            <v-card-text>
+                                                <div class="flex flex-col items-center justify-start">
+                                                    <h3 class="mb-2">{{ tasksListsStore.translate('pages.task.renameTask')
+                                                    }}
+                                                    </h3>
+                                                    <v-text-field class="w-100" v-model="taskTitle"
+                                                        :rules="[rules.required]"
+                                                        :label="tasksListsStore.translate('pages.task.taskName')"></v-text-field>
+                                                </div>
+                                            </v-card-text>
+                                            <v-card-actions>
+                                                <div class="flex items-center justify-evenly mt-2 w-100">
+                                                    <v-btn color="blue-grey-darken-3" @click="showRenameModal = false"
+                                                        size="large" variant="text">{{
+                                                            tasksListsStore.translate('app.cancel')
+                                                        }}</v-btn>
+                                                    <v-btn variant="elevated" color="blue-grey-darken-3" @click="renameTask"
+                                                        size="large">{{
+                                                            tasksListsStore.translate('app.save') }}</v-btn>
+                                                </div>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-dialog>
+
+                                    <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
+                                        @click="deleteTask">
+                                        <v-icon :class="isRTL ? 'ml-3' : 'mr-3'" size="large" color="black"
+                                            icon="mdi-trash-can-outline"></v-icon>
+                                        <p>{{ tasksListsStore.translate('pages.task.deleteTask') }}</p>
+                                    </li>
                                     <!-- <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
                                         tasksListsStore.translate('pages.task.repeat') }}</li> -->
                                     <!-- <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
@@ -118,7 +159,7 @@
                         <div class="flex items-center justify-start w-100">
                             <v-checkbox v-model="step.completed" hide-details
                                 @click="changeStepStatus(step.id, !step.completed)"></v-checkbox>
-                            <p class="py-3 w-100 ml-3">{{ step.title }}</p>
+                            <p class="py-3 w-100 mx-3">{{ step.title }}</p>
                         </div>
 
                         <v-dialog v-model="showStepOptions" width="auto">
@@ -130,13 +171,13 @@
                                     <ul class="flex flex-col">
                                         <li @click="promoteToTask(step.id)"
                                             class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center">
-                                            <v-icon class="ml-3" size="large" color="black"
+                                            <v-icon :class="isRTL ? 'ml-3' : 'mr-3'" size="large" color="black"
                                                 icon="mdi-arrow-top-left"></v-icon>
                                             <p>{{ tasksListsStore.translate('pages.task.promoteToTask') }}</p>
                                         </li>
                                         <li @click="deleteStep(step.id)"
                                             class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center">
-                                            <v-icon class="ml-3" size="large" color="black"
+                                            <v-icon :class="isRTL ? 'ml-3' : 'mr-3'" size="large" color="black"
                                                 icon="mdi-trash-can-outline"></v-icon>
                                             <p>{{ tasksListsStore.translate('pages.task.deleteStep') }}</p>
                                         </li>
@@ -163,7 +204,7 @@
             <div class="flex justify-between items-center w-100">
                 <p><span class="text-sm text-slate-400">{{ tasksListsStore.translate('app.createdAt') }}</span> {{
                     createdAtRelativeTime() }}</p>
-                <v-icon @click="deleteTask" size="large" color="red" icon="mdi-delete-outline"></v-icon>
+                <!-- <v-icon @click="deleteTask" size="large" color="red" icon="mdi-delete-outline"></v-icon> -->
             </div>
         </template>
     </Layout>
@@ -183,6 +224,8 @@ export default {
         return {
             newStepTitle: '',
             tasksListsStore: useTasksStore(),
+            showRenameModal: false,
+            taskTitle: '',
             showTaskOptions: false,
             showStepOptions: false,
             showRemindModal: false,
@@ -196,10 +239,13 @@ export default {
     },
     computed: {
         list() {
-            return this.tasksListsStore.$state.lists.find(list => list.id == this.$props.listId);
+            return this.tasksListsStore.lists.find(list => list.id == this.$props.listId);
         },
         task() {
             return this.list.tasks.find(ts => ts.id == this.$props.taskId);
+        },
+        isRTL() {
+            return this.tasksListsStore.configs.country.direction === 'rtl';
         }
     },
     methods: {
@@ -258,7 +304,14 @@ export default {
             this.tasksListsStore.updateTask(this.listId, this.taskId, 'dueDate', this.dueDate);
             this.showTaskOptions = false;
             this.showAddDueDateModal = false;
+        },
+        renameTask() {
+            this.tasksListsStore.renameTask(this.listId, this.listTitle, this.taskTitle);
+            this.showRenameModal = false;
         }
+    },
+    mounted() {
+        this.taskTitle = this.task.title;
     }
 }
 </script>

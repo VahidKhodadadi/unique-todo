@@ -17,7 +17,7 @@
                         {{ list.title }}
                         <span>({{ list.tasks.length }})</span>
                     </p>
-                    <v-icon @click.stop="deleteList(list.id)" size="large" color="red" icon="mdi-delete-outline"></v-icon>
+                    <!-- <v-icon @click.stop="deleteList(list.id)" size="large" color="red" icon="mdi-delete-outline"></v-icon> -->
                 </li>
             </ul>
         </template>
@@ -58,7 +58,7 @@ export default {
     },
     computed: {
         listItems() {
-            return this.tasksListsStore.$state.lists;
+            return this.tasksListsStore.lists;
         }
     }
 }

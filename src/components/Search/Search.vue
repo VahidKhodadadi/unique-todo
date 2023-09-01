@@ -46,7 +46,7 @@ export default {
         },
         goToTaskPage(taskId) {
             let currentList = '';
-            for (const list of this.tasksListsStore.$state.lists) {
+            for (const list of this.tasksListsStore.lists) {
                 const taskIds = list.tasks.map(ts => ts.id);
                 if (taskIds.includes(taskId)) {
                     currentList = list;

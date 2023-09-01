@@ -17,12 +17,14 @@
                                     tasksListsStore.translate('pages.tasks.sortBy') }}</li> -->
                                 <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
                                     @click="copyList">
-                                    <v-icon class="ml-3" size="large" color="black" icon="mdi-content-copy"></v-icon>
+                                    <v-icon :class="isRTL ? 'ml-3' : 'mr-3'" size="large" color="black"
+                                        icon="mdi-content-copy"></v-icon>
                                     <p>{{ tasksListsStore.translate('pages.tasks.copyList') }}</p>
                                 </li>
                                 <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
                                     @click="duplicateList">
-                                    <v-icon class="ml-3" size="large" color="black" icon="mdi-content-duplicate"></v-icon>
+                                    <v-icon :class="isRTL ? 'ml-3' : 'mr-3'" size="large" color="black"
+                                        icon="mdi-content-duplicate"></v-icon>
                                     <p>{{ tasksListsStore.translate('pages.tasks.duplicateList') }}</p>
                                 </li>
 
@@ -30,7 +32,8 @@
                                     <template v-slot:activator="{ props }">
                                         <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
                                             v-bind="props">
-                                            <v-icon class="ml-3" size="large" color="black" icon="mdi-rename"></v-icon>
+                                            <v-icon :class="isRTL ? 'ml-3' : 'mr-3'" size="large" color="black"
+                                                icon="mdi-rename"></v-icon>
                                             <p>{{ tasksListsStore.translate('pages.tasks.renameList') }}</p>
                                         </li>
                                     </template>
@@ -59,7 +62,8 @@
 
                                 <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
                                     @click="deleteList">
-                                    <v-icon class="ml-3" size="large" color="black" icon="mdi-trash-can-outline"></v-icon>
+                                    <v-icon :class="isRTL ? 'ml-3' : 'mr-3'" size="large" color="black"
+                                        icon="mdi-trash-can-outline"></v-icon>
                                     <p>{{ tasksListsStore.translate('pages.tasks.deleteList') }}</p>
                                 </li>
                             </ul>
@@ -138,10 +142,13 @@ export default {
             return this.$route.params.listId;
         },
         listName() {
-            return this.tasksListsStore.$state.lists.find(list => list.id == this.listId)?.title || '';
+            return this.tasksListsStore.lists.find(list => list.id == this.listId)?.title || '';
         },
         tasks() {
-            return this.tasksListsStore.$state.lists.find(list => list.id == this.listId)?.tasks || [];
+            return this.tasksListsStore.lists.find(list => list.id == this.listId)?.tasks || [];
+        },
+        isRTL() {
+            return this.tasksListsStore.configs.country.direction === 'rtl';
         }
     },
     methods: {

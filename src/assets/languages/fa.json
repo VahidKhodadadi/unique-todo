@@ -48,7 +48,10 @@
             "promoteToTask": "تبدیل به وظیفه",
             "deleteStep": "حذف مرحله",
             "remindMeAt": "تاریخ یادآوری",
-            "dueDate":"تاریخ اتمام"
+            "dueDate":"تاریخ اتمام",
+            "deleteTask": "حذف وظیفه",
+            "renameTask": "تغییر نام وظیفه",
+            "taskName": "عنوان وظیفه"
         },
         "search": {
             "searchForTasks": "جستجوی وظایف"
