@@ -11,12 +11,17 @@ import App from './App.vue'
 import router from './router'
 import { createPinia } from 'pinia';
 import MomentUtils from "@date-io/jalaali"
+import { fa } from 'vuetify/locale'
 
-const momentUtil = new MomentUtils({ locale: "sv" });
+const momentUtil = new MomentUtils({ locale: "fa" });
 
 const app = createApp(App);
 const pinia = createPinia();
 const vuetify = createVuetify({
+    locale: {
+        locale: 'fa',
+        messages: { fa }
+    },
     components: {
         ...components,
         VDatePicker

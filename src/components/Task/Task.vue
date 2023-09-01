@@ -191,7 +191,7 @@
                         </v-dialog>
                     </li>
                 </ul>
-                <v-form @submit.prevent="addNewStep()" class="w-100 px-3 flex flex-col items-center">
+                <v-form validate-on="submit" @submit.prevent="addNewStep()" class="w-100 px-3 flex flex-col items-center">
                     <v-text-field class="w-100" v-model="newStepTitle" clearable :rules="[rules.required]"
                         :placeholder="tasksListsStore.translate('pages.task.enterStepTitle')"></v-text-field>
                     <v-btn class="w-full sm:w-auto" color="blue-grey-darken-3" type="submit" size="large"
