@@ -1,7 +1,6 @@
 <template>
   <RouterView v-slot="{ Component }">
-    <div class="h-screen"
-      :class="tasksListsStore.configs.country.direction === 'ltr' ? 'direction-ltr' : 'direction-rtl'">
+    <div class="h-screen">
       <div class="h-[40px] bg-slate-300 flex items-center justify-between px-3">
         <div>
           <!-- <v-img class="hover:cursor-pointer w-[30px]" @click="this.$router.push('/')" src="/favicon-96.png"
@@ -17,7 +16,7 @@
           </div>
           <ul class="absolute top-7 right-0 hidden group-hover:inline-block rounded-sm overflow-hidden">
             <li v-for="cnt in countries" class="flex justify-end items-center bg-slate-200 px-3 hover:bg-slate-300"
-              @click="setConfigKey('country', cnt)">
+              @click="changeCountry(cnt)">
               <span class="capitalize font-sans">{{ cnt.lang }}</span>
               <div :class="tasksListsStore.configs.country.direction === 'ltr' ? 'ml-3' : 'mr-3'">
                 <v-img :src="cnt.flag" height="30" width="30"></v-img>
@@ -48,6 +47,10 @@ export default {
   methods: {
     setConfigKey(key, value) {
       this.tasksListsStore.setConfigKey(key, value);
+    },
+    changeCountry(cnt) {
+      this.setConfigKey('country', cnt);
+      document.dir = cnt.direction;
     }
   },
   mounted() {
@@ -67,18 +70,14 @@ export default {
 </script>
 
 <style>
-.direction-ltr {
+:root[dir='ltr'] * {
   font-family: -apple-system, Inter, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
     Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   direction: ltr;
 }
 
-.direction-rtl {
+:root[dir='rtl'] * {
   font-family: 'Vazir';
-  direction: rtl;
-}
-
-.direction-rtl * {
   letter-spacing: -1px;
   direction: rtl;
 }

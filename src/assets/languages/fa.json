@@ -2,7 +2,10 @@
     "app": {
         "close": "بستن",
         "cancel": "لغو",
-        "save": "ذخیره"
+        "save": "ذخیره",
+        "today": "امروز",
+        "listCopied": "فهرست کپی شد.",
+        "createdAt": "ایجاد شده در"
     },
     "validations": {
         "required": "فیلد الزامی است"
@@ -25,7 +28,8 @@
             "copyList": "کپی فهرست",
             "duplicateList": "تکثیر فهرست",
             "renameList": "تغییر نام فهرست",
-            "deleteList": "حذف فهرست"
+            "deleteList": "حذف فهرست",
+            "of": "از"
         },
         "newTask": {
             "newTask": "وظیفه جدید",
@@ -40,7 +44,11 @@
             "remindMe": "یادآوری کن",
             "repeat": "تکرار",
             "addDueDate": "افزودن تاریخ اتمام",
-            "addFile": "بارگزاری فایل"
+            "addFile": "بارگزاری فایل",
+            "promoteToTask": "تبدیل به وظیفه",
+            "deleteStep": "حذف مرحله",
+            "remindMeAt": "تاریخ یادآوری",
+            "dueDate":"تاریخ اتمام"
         },
         "search": {
             "searchForTasks": "جستجوی وظایف"

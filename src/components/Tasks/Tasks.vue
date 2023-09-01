@@ -2,7 +2,8 @@
     <Layout>
         <template #header>
             <div class="flex flex-row justify-between items-center w-100">
-                <v-icon @click="goBack" size="large" color="black" :icon="tasksListsStore.configs.country.direction === 'ltr' ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
+                <v-icon @click="goBack" size="large" color="black"
+                    :icon="tasksListsStore.configs.country.direction === 'ltr' ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
                 <h1 class="text-white text-3xl">{{ listName }}</h1>
 
                 <v-dialog v-model="showListOptions" width="auto">
@@ -12,8 +13,8 @@
                     <v-card>
                         <v-card-text>
                             <ul class="flex flex-col">
-                                <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
-                                    tasksListsStore.translate('pages.tasks.sortBy') }}</li>
+                                <!-- <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
+                                    tasksListsStore.translate('pages.tasks.sortBy') }}</li> -->
                                 <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8" @click="copyList">{{
                                     tasksListsStore.translate('pages.tasks.copyList') }}
                                 </li>
@@ -32,7 +33,7 @@
                                                 <h3 class="mb-2">{{ tasksListsStore.translate('pages.tasks.renameList') }}
                                                 </h3>
                                                 <v-text-field class="w-100" v-model="listTitle" :rules="[rules.required]"
-                                                    clearable label="Rename list"></v-text-field>
+                                                    :label="tasksListsStore.translate('pages.tasks.renameList')"></v-text-field>
                                             </div>
                                         </v-card-text>
                                         <v-card-actions>
@@ -40,7 +41,7 @@
                                                 <v-btn color="blue-grey-darken-3" @click="showRenameModal = false"
                                                     size="large" variant="text">{{ tasksListsStore.translate('app.cancel')
                                                     }}</v-btn>
-                                                <v-btn color="blue-grey-darken-3" @click="renameList" size="large">{{
+                                                <v-btn variant="elevated" color="blue-grey-darken-3" @click="renameList" size="large">{{
                                                     tasksListsStore.translate('app.save') }}</v-btn>
                                             </div>
                                         </v-card-actions>
@@ -73,7 +74,7 @@
                             <p class="text-slate-800 font-semibold">{{ task.title }}</p>
                         </div>
                         <span v-if="Boolean(task)">{{ task.steps.filter(step => step.completed ===
-                            true).length }} of {{ task.steps.length }}</span>
+                            true).length }} {{ tasksListsStore.translate('pages.tasks.of') }} {{ task.steps.length }}</span>
                     </div>
 
                     <div>
@@ -82,6 +83,15 @@
                     </div>
                 </li>
             </ul>
+
+            <v-snackbar v-model="showCopySnack">
+                {{ tasksListsStore.translate('app.listCopied') }}
+                <template v-slot:actions>
+                    <v-btn color="pink" variant="text" @click="showCopySnack = false">
+                        {{ tasksListsStore.translate('app.close') }}
+                    </v-btn>
+                </template>
+            </v-snackbar>
         </template>
 
         <template #footer>
@@ -105,6 +115,7 @@ export default {
             tasksListsStore: useTasksStore(),
             showRenameModal: false,
             showListOptions: false,
+            showCopySnack: false,
             listTitle: '',
             rules: {
                 required: value => !!value || this.tasksListsStore.translate('validations.required'),
@@ -153,6 +164,7 @@ export default {
         },
         copyList() {
             this.tasksListsStore.copyList(this.listId);
+            this.showCopySnack = true;
         },
         isTaskDueDated
     },

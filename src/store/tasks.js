@@ -76,6 +76,7 @@ export const useTasksStore = defineStore('tasksLists', {
             const langFileName = configsData ? configsData.country.lang : countries[0].lang;
             import(`../assets/languages/${langFileName}.json`)
                 .then(newLanguageData => {
+                    document.dir = configsData ? configsData.country.direction : countries[0].direction;
                     this.$state.configs = configsData ? {
                         ...configsData
                     } : {
@@ -130,6 +131,11 @@ export const useTasksStore = defineStore('tasksLists', {
                 title: task.title
             });
             this.saveTasks();
+        },
+        updateTask(listId, taskId, taskKey, taskValue) {
+            const list = this.getListById(listId);
+            const task = this.getTaskById(list, taskId);
+            task[taskKey] = taskValue;
         },
         deleteTask(listId, taskId) {
             const list = this.getListById(listId);

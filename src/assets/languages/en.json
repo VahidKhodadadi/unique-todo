@@ -2,7 +2,10 @@
     "app": {
         "close": "Close",
         "cancel": "Cancel",
-        "save": "Save"
+        "save": "Save",
+        "today": "Today",
+        "listCopied": "Copied list.",
+        "createdAt": "Created at"
     },
     "validations": {
         "required": "Field is required"
@@ -25,7 +28,8 @@
             "copyList": "Copy list",
             "duplicateList": "Duplicate list",
             "renameList": "Rename list",
-            "deleteList": "Delete list"
+            "deleteList": "Delete list",
+            "of": "of"
         },
         "newTask": {
             "newTask": "New task",
@@ -40,7 +44,11 @@
             "remindMe": "Remind me",
             "repeat": "Repeat",
             "addDueDate": "Add due date",
-            "addFile": "Add file"
+            "addFile": "Add file",
+            "promoteToTask": "Promote to task",
+            "deleteStep": "Delete step",
+            "remindMeAt": "Remind me at",
+            "dueDate": "Due date"
         },
         "search": {
             "searchForTasks": "Search for tasks"

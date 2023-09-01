@@ -2,7 +2,8 @@
     <Layout>
         <template #header>
             <div class="flex flex-row justify-between items-center w-100">
-                <v-icon @click="goBack" size="large" color="black" :icon="tasksListsStore.configs.country.direction === 'ltr' ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
+                <v-icon @click="goBack" size="large" color="black"
+                    :icon="tasksListsStore.configs.country.direction === 'ltr' ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
                 <h1 class="text-white text-3xl">{{ list.title }}</h1>
                 <div></div>
             </div>
@@ -26,14 +27,92 @@
                         <v-card>
                             <v-card-text>
                                 <ul class="flex flex-col">
-                                    <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
-                                        tasksListsStore.translate('pages.task.remindMe') }}</li>
-                                    <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
-                                        tasksListsStore.translate('pages.task.repeat') }}</li>
-                                    <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
-                                        tasksListsStore.translate('pages.task.addDueDate') }}</li>
-                                    <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
-                                        tasksListsStore.translate('pages.task.addFile') }}</li>
+                                    <v-dialog v-model="showRemindModal" width="auto">
+                                        <template v-slot:activator="{ props }">
+                                            <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8"
+                                                @click="showRemindModal = true">
+                                                {{ tasksListsStore.translate('pages.task.remindMe') }}</li>
+                                        </template>
+
+                                        <v-card>
+                                            <v-card-text>
+                                                <div class="flex flex-col items-center justify-start">
+                                                    <h3 class="mb-2">{{ tasksListsStore.translate('pages.task.remindMeAt')
+                                                    }}
+                                                    </h3>
+                                                    <!-- <v-text-field class="w-100" type="datetime-local" v-model="taskDueDate" clearable
+                    :label="tasksListsStore.translate('pages.newTask.dueDate')"></v-text-field> -->
+
+                                                    <v-text-field class="w-100" type="datetime-local"
+                                                        v-model="remindMeDateTime" clearable
+                                                        :label="tasksListsStore.translate('pages.task.remindMeAt')"></v-text-field>
+                                                    <!-- <v-text-field class="w-100" v-model=""
+                                                        :rules="[rules.required]"
+                                                        :label="tasksListsStore.translate('pages.tasks.renameList')"></v-text-field> -->
+                                                </div>
+                                            </v-card-text>
+                                            <v-card-actions>
+                                                <div class="flex items-center justify-evenly mt-2 w-100">
+                                                    <v-btn color="blue-grey-darken-3" @click="showRemindModal = false"
+                                                        size="large" variant="text">{{
+                                                            tasksListsStore.translate('app.cancel')
+                                                        }}</v-btn>
+                                                    <v-btn variant="elevated" color="blue-grey-darken-3"
+                                                        @click="setTaskRemindDateTime" size="large">{{
+                                                            tasksListsStore.translate('app.save') }}</v-btn>
+                                                </div>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-dialog>
+
+
+
+
+
+
+                                    <v-dialog v-model="showAddDueDateModal" width="auto">
+                                        <template v-slot:activator="{ props }">
+                                            <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8"
+                                                @click="showAddDueDateModal = true">
+                                                {{ tasksListsStore.translate('pages.task.addDueDate') }}</li>
+                                        </template>
+
+                                        <v-card>
+                                            <v-card-text>
+                                                <div class="flex flex-col items-center justify-start">
+                                                    <h3 class="mb-2">{{ tasksListsStore.translate('pages.task.dueDate')
+                                                    }}
+                                                    </h3>
+                                                    <!-- <v-text-field class="w-100" type="datetime-local" v-model="taskDueDate" clearable
+                    :label="tasksListsStore.translate('pages.newTask.dueDate')"></v-text-field> -->
+
+                                                    <v-text-field class="w-100" type="datetime-local" v-model="dueDate"
+                                                        clearable
+                                                        :label="tasksListsStore.translate('pages.task.dueDate')"></v-text-field>
+                                                    <!-- <v-text-field class="w-100" v-model=""
+                                                        :rules="[rules.required]"
+                                                        :label="tasksListsStore.translate('pages.tasks.renameList')"></v-text-field> -->
+                                                </div>
+                                            </v-card-text>
+                                            <v-card-actions>
+                                                <div class="flex items-center justify-evenly mt-2 w-100">
+                                                    <v-btn color="blue-grey-darken-3" @click="showAddDueDateModal = false"
+                                                        size="large" variant="text">{{
+                                                            tasksListsStore.translate('app.cancel')
+                                                        }}</v-btn>
+                                                    <v-btn variant="elevated" color="blue-grey-darken-3"
+                                                        @click="setTaskDueDate" size="large">{{
+                                                            tasksListsStore.translate('app.save') }}</v-btn>
+                                                </div>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-dialog>
+                                    <!-- <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
+                                        tasksListsStore.translate('pages.task.repeat') }}</li> -->
+                                    <!-- <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
+                                        tasksListsStore.translate('pages.task.addDueDate') }}</li> -->
+                                    <!-- <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
+                                        tasksListsStore.translate('pages.task.addFile') }}</li> -->
                                 </ul>
                             </v-card-text>
                             <v-card-actions>
@@ -44,7 +123,7 @@
                     </v-dialog>
                 </div>
 
-                <ul class="list-none w-100 mb-3 px-3">
+                <ul class="list-none w-100 mb-3 px-3 bg-slate-200">
                     <li v-if="Boolean(task)" v-for="step in task.steps" class="flex items-center justify-between w-100"
                         :key="step.id">
                         <div class="flex items-center justify-start w-100">
@@ -61,9 +140,11 @@
                                 <v-card-text>
                                     <ul class="flex flex-col">
                                         <li @click="promoteToTask(step.id)"
-                                            class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">Promote to task</li>
+                                            class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
+                                                tasksListsStore.translate('pages.task.promoteToTask') }}</li>
                                         <li @click="deleteStep(step.id)"
-                                            class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">Delete step</li>
+                                            class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8">{{
+                                                tasksListsStore.translate('pages.task.deleteStep') }}</li>
                                     </ul>
                                 </v-card-text>
                                 <v-card-actions>
@@ -75,7 +156,7 @@
                     </li>
                 </ul>
                 <v-form @submit.prevent="addNewStep()" class="w-100 px-3 d-flex flex-col items-center">
-                    <v-text-field class="w-100" v-model="newStepTitle" clearable
+                    <v-text-field class="w-100" v-model="newStepTitle" clearable :rules="[rules.required]"
                         :placeholder="tasksListsStore.translate('pages.task.enterStepTitle')"></v-text-field>
                     <v-btn class="w-full sm:w-auto" color="blue-grey-darken-3" type="submit" size="large"
                         prepend-icon="mdi-plus">{{ tasksListsStore.translate('pages.task.addStep') }}</v-btn>
@@ -85,7 +166,8 @@
 
         <template #footer>
             <div class="flex justify-between items-center w-100">
-                <p>{{ createdAtRelativeTime() }}</p>
+                <p><span class="text-sm text-slate-400">{{ tasksListsStore.translate('app.createdAt') }}</span> {{
+                    createdAtRelativeTime() }}</p>
                 <v-icon @click="deleteTask" size="large" color="red" icon="mdi-delete-outline"></v-icon>
             </div>
         </template>
@@ -107,7 +189,14 @@ export default {
             newStepTitle: '',
             tasksListsStore: useTasksStore(),
             showTaskOptions: false,
-            showStepOptions: false
+            showStepOptions: false,
+            showRemindModal: false,
+            remindMeDateTime: '',
+            showAddDueDateModal: false,
+            dueDate: '',
+            rules: {
+                required: value => !!value || this.tasksListsStore.translate('validations.required'),
+            },
         }
     },
     computed: {
@@ -121,7 +210,7 @@ export default {
     methods: {
         addNewStep() {
             if (this.newStepTitle.trim() === '') {
-                console.error('Enter a valid step title!');
+                // console.error(this.tasksListsStore.translate('validations.required'));
                 return;
             }
             this.tasksListsStore.addStep(this.$props.listId, this.$props.taskId, this.newStepTitle);
@@ -137,6 +226,7 @@ export default {
         },
         deleteStep(stepId) {
             this.tasksListsStore.deleteStep(this.$props.listId, this.$props.taskId, stepId);
+            this.showStepOptions = false;
         },
         changeTaskStatus(status) {
             this.tasksListsStore.changeTaskStatus(this.$props.listId, this.$props.taskId, status);
@@ -146,6 +236,7 @@ export default {
         },
         promoteToTask(stepId) {
             this.tasksListsStore.convertStepToTask(this.$props.listId, this.$props.taskId, stepId);
+            this.showStepOptions = false;
         },
         isTaskDueDated,
         createdAtRelativeTime() {
@@ -154,8 +245,20 @@ export default {
             const timestampDiff = today.getTime() - createdAtDate.getTime();
             const dayDiff = timestampDiff / 1000 / 60 / 60 / 24;
             const roundedDayDiff = Math.floor(dayDiff);
-            const rtf1 = new Intl.RelativeTimeFormat('en', { style: 'short' });
-            return roundedDayDiff == 0 ? 'Today' : rtf1.format(-(roundedDayDiff), 'day');
+            const lang = this.tasksListsStore.configs.country.lang;
+            const rtf1 = new Intl.RelativeTimeFormat(lang, { style: 'short' });
+            if (roundedDayDiff == 0) {
+                return this.tasksListsStore.translate('app.today');
+            }
+            else {
+                return rtf1.format(-(roundedDayDiff), 'day');
+            }
+        },
+        setTaskRemindDateTime() {
+            updateTask(this.listId, this.taskId, 'remindMeAtDateTime', this.remindMeDateTime);
+        },
+        setTaskDueDate() {
+            updateTask(this.listId, this.taskId, 'dueDate', this.dueDate);
         }
     }
 }

@@ -3,6 +3,12 @@
   font-size: 16px;
 }
 
+@media(max-width: 640px) {
+  :root {
+    font-size: 18px;
+  }
+}
+
 /* @media (prefers-color-scheme: dark) {
   :root {}
 } */
@@ -53,11 +59,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  font-family: inherit;
-  letter-spacing: inherit;
-}
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;
@@ -66,4 +67,12 @@ body {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+p, li, span {
+  font-size: 1rem;
+}
+
+h3 {
+  font-size: 1.2rem;
 }
