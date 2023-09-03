@@ -3,7 +3,7 @@
         <template #header>
             <div class="flex flex-row justify-between items-center w-100">
                 <v-icon @click="goBack" size="large" color="black" :icon="tasksListsStore.configs.country.direction === 'ltr' ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
-                <h1 class="text-white text-3xl">{{ tasksListsStore.translate('pages.newList.newList') }}</h1>
+                <h1 class="text-white text-2xl">{{ tasksListsStore.translate('pages.newList.newList') }}</h1>
                 <div></div>
             </div>
         </template>

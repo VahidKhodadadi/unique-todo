@@ -13,7 +13,7 @@ export default defineConfig({
       devOptions: {
         enabled: true
       },
-      includeAssets: ['favicon-16.png', 'favicon-32.png', 'favicon-96.png'],
+      includeAssets: ['favicons/favicon-16.png', 'favicons/favicon-32.png', 'favicons/favicon-96.png', 'favicons/favicon-128.png', 'favicons/favicon-256.png', 'favicons/favicon-512.png'],
       manifest: {
         name: 'Unique Todo app',
         short_name: 'Unique Todo',
@@ -21,37 +21,37 @@ export default defineConfig({
         theme_color: '#ffffff',
         icons: [
           {
-            src: 'favicon-16.png',
+            src: 'favicons/favicon-16.png',
             sizes: '16x16',
             type: 'image/png'
           },
           {
-            src: 'favicon-32.png',
+            src: 'favicons/favicon-32.png',
             sizes: '32x32',
             type: 'image/png'
           },
           {
-            src: 'favicon-64.png',
+            src: 'favicons/favicon-64.png',
             sizes: '64x64',
             type: 'image/png'
           },
           {
-            src: 'favicon-96.png',
+            src: 'favicons/favicon-96.png',
             sizes: '96x96',
             type: 'image/png'
           },
           {
-            src: 'favicon-128.png',
+            src: 'favicons/favicon-128.png',
             sizes: '128x128',
             type: 'image/png'
           },
           {
-            src: 'favicon-256.png',
+            src: 'favicons/favicon-256.png',
             sizes: '256x256',
             type: 'image/png'
           },
           {
-            src: 'favicon-512.png',
+            src: 'favicons/favicon-512.png',
             sizes: '512x512',
             type: 'image/png'
           },

@@ -4,7 +4,7 @@
             <div class="flex flex-row justify-between items-center w-100">
                 <v-icon @click="goBack" size="large" color="black"
                     :icon="tasksListsStore.configs.country.direction === 'ltr' ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
-                <h1 class="text-white text-3xl">{{ listName }}</h1>
+                <h1 class="text-white text-2xl">{{ listName }}</h1>
 
                 <v-dialog v-show="showListOptions" width="auto">
                     <template v-slot:activator="{ props }">
