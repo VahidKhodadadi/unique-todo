@@ -18,7 +18,7 @@
             <li v-for="cnt in countries" class="flex justify-end items-center bg-slate-200 px-3 hover:bg-slate-300"
               @click="changeCountry(cnt)">
               <span class="capitalize font-sans">{{ cnt.lang }}</span>
-              <div :class="tasksListsStore.configs.country.direction === 'ltr' ? 'ml-3' : 'mr-3'">
+              <div :class="!isRTL ? 'ml-3' : 'mr-3'">
                 <v-img :src="cnt.flag" height="30" width="30"></v-img>
               </div>
             </li>
@@ -64,6 +64,11 @@ export default {
       import(`../src/assets/languages/${newLang}.json`).then(newLanguageData => {
         this.tasksListsStore.setLanguageData(newLanguageData.default);
       })
+    }
+  },
+  computed: {
+    isRTL() {
+      return this.tasksListsStore.configs.country.direction === 'rtl';
     }
   }
 }

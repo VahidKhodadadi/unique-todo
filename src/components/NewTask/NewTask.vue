@@ -3,14 +3,14 @@
         <template #header>
             <div class="flex flex-row justify-between items-center w-100">
                 <v-icon @click="goBack" size="large" color="black"
-                    :icon="tasksListsStore.configs.country.direction === 'ltr' ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
+                    :icon="!isRTL ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
                 <h1 class="text-white text-2xl">{{ tasksListsStore.translate('pages.newTask.newTask') }}</h1>
                 <div></div>
             </div>
         </template>
 
         <template #main>
-            <v-form @submit.prevent="addTask" class="flex flex-col items-center">
+            <v-form validate-on="submit" @submit.prevent="addTask" class="flex flex-col items-center">
                 <v-text-field class="w-100" v-model="taskTitle" :rules="[rules.required]" clearable
                     :label="tasksListsStore.translate('pages.newTask.enterTaskTitle')"></v-text-field>
 
@@ -66,6 +66,9 @@ export default {
     computed: {
         listId() {
             return this.$router.options.history.state.listId;
+        },
+        isRTL() {
+            return this.tasksListsStore.configs.country.direction === 'rtl';
         }
     }
 }

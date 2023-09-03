@@ -3,10 +3,10 @@
         <template #header>
             <div class="flex flex-row justify-between items-center w-100">
                 <v-icon @click="goBack" size="large" color="black"
-                    :icon="tasksListsStore.configs.country.direction === 'ltr' ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
+                    :icon="!isRTL ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
                 <h1 class="text-white text-2xl">{{ listName }}</h1>
 
-                <v-dialog v-show="showListOptions" width="auto">
+                <v-dialog width="auto">
                     <template v-slot:activator="{ props }">
                         <v-icon v-bind="props" size="large" color="black" icon="mdi-dots-vertical"></v-icon>
                     </template>
@@ -28,7 +28,7 @@
                                     <p>{{ tasksListsStore.translate('pages.tasks.duplicateList') }}</p>
                                 </li>
 
-                                <v-dialog v-show="showRenameModal" width="auto">
+                                <v-dialog width="auto">
                                     <template v-slot:activator="{ props }">
                                         <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
                                             v-bind="props">
@@ -49,9 +49,9 @@
                                         </v-card-text>
                                         <v-card-actions>
                                             <div class="flex items-center justify-evenly mt-2 w-100">
-                                                <v-btn color="blue-grey-darken-3" @click="showRenameModal = false"
+                                                <!-- <v-btn color="blue-grey-darken-3" @click="showRenameModal = false"
                                                     size="large" variant="text">{{ tasksListsStore.translate('app.cancel')
-                                                    }}</v-btn>
+                                                    }}</v-btn> -->
                                                 <v-btn variant="elevated" color="blue-grey-darken-3" @click="renameList"
                                                     size="large">{{
                                                         tasksListsStore.translate('app.save') }}</v-btn>
@@ -68,10 +68,10 @@
                                 </li>
                             </ul>
                         </v-card-text>
-                        <v-card-actions>
-                            <v-btn color="primary" block @click="showListOptions = false">{{
+                        <!-- <v-card-actions>
+                            <v-btn color="primary" block @click.prevent="showListOptions = false">{{
                                 tasksListsStore.translate('app.close') }}</v-btn>
-                        </v-card-actions>
+                        </v-card-actions> -->
                     </v-card>
                 </v-dialog>
             </div>
@@ -128,8 +128,6 @@ export default {
     data() {
         return {
             tasksListsStore: useTasksStore(),
-            showRenameModal: false,
-            showListOptions: false,
             showCopySnack: false,
             listTitle: '',
             rules: {
@@ -179,7 +177,6 @@ export default {
                 return;
             }
             this.tasksListsStore.renameList(this.listId, this.listTitle);
-            this.showRenameModal = false;
         },
         copyList() {
             this.tasksListsStore.copyList(this.listId);

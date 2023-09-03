@@ -3,10 +3,12 @@
         <template #header>
             <div class="flex flex-row justify-between items-center w-100">
                 <div class="flex items-center justify-between w-100">
-                    <v-icon @click="goBack" size="large" color="black" :icon="tasksListsStore.configs.country.direction === 'ltr' ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
+                    <v-icon @click="goBack" size="large" color="black"
+                        :icon="!isRTL ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
                     <div class="w-5/6">
                         <v-text-field clearable :value="searchPhrase" @input="searchChangeHandler"
-                            :placeholder="tasksListsStore.translate('pages.search.searchForTasks')" variant="plain"></v-text-field>
+                            :placeholder="tasksListsStore.translate('pages.search.searchForTasks')"
+                            variant="plain"></v-text-field>
                     </div>
                     <div></div>
                 </div>
@@ -56,6 +58,11 @@ export default {
         },
         goBack() {
             this.$router.go(-1);
+        }
+    },
+    computed: {
+        isRTL() {
+            return this.tasksListsStore.configs.country.direction === 'rtl';
         }
     }
 }

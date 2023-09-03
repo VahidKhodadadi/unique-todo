@@ -2,14 +2,15 @@
     <Layout>
         <template #header>
             <div class="flex flex-row justify-between items-center w-100">
-                <v-icon @click="goBack" size="large" color="black" :icon="tasksListsStore.configs.country.direction === 'ltr' ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
+                <v-icon @click="goBack" size="large" color="black"
+                    :icon="!isRTL ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
                 <h1 class="text-white text-2xl">{{ tasksListsStore.translate('pages.newList.newList') }}</h1>
                 <div></div>
             </div>
         </template>
 
         <template #main>
-            <v-form class="flex flex-col items-start gap-2" @submit.prevent="addList">
+            <v-form validate-on="submit" class="flex flex-col items-start gap-2" @submit.prevent="addList">
                 <v-text-field class="w-100" v-model="listTitle" :rules="[rules.required]" clearable
                     :label="tasksListsStore.translate('pages.newList.enterListTitle')"></v-text-field>
 
@@ -70,6 +71,11 @@ export default {
         },
         goBack() {
             this.$router.go(-1);
+        }
+    },
+    computed: {
+        isRTL() {
+            return this.tasksListsStore.configs.country.direction === 'rtl';
         }
     }
 }
