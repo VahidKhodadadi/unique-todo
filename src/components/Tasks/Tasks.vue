@@ -88,7 +88,7 @@
                             <v-icon v-if="isTaskDueDated(task)" size="large" color="orange" icon="mdi-alert"></v-icon>
                             <p class="text-slate-800 font-semibold">{{ task.title }}</p>
                         </div>
-                        <span v-if="Boolean(task)">{{ task.steps.filter(step => step.completed ===
+                        <span v-if="Boolean(task) && task.steps.length > 0">{{ task.steps.filter(step => step.completed ===
                             true).length }} {{ tasksListsStore.translate('pages.tasks.of') }} {{ task.steps.length }}</span>
                     </div>
 
