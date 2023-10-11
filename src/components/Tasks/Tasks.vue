@@ -28,7 +28,7 @@
                                     <p>{{ tasksListsStore.translate('pages.tasks.duplicateList') }}</p>
                                 </li>
 
-                                <v-dialog width="auto">
+                                <v-dialog width="auto" v-model="showRenameListDialog">
                                     <template v-slot:activator="{ props }">
                                         <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
                                             v-bind="props">
@@ -133,6 +133,7 @@ export default {
             rules: {
                 required: value => !!value || this.tasksListsStore.translate('validations.required'),
             },
+            showRenameListDialog: false
         }
     },
     computed: {
@@ -177,6 +178,7 @@ export default {
                 return;
             }
             this.tasksListsStore.renameList(this.listId, this.listTitle);
+            this.showRenameListDialog = false;
         },
         copyList() {
             this.tasksListsStore.copyList(this.listId);

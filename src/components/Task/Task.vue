@@ -97,7 +97,7 @@
                                         </v-card>
                                     </v-dialog>
 
-                                    <v-dialog width="auto">
+                                    <v-dialog width="100%" v-model="showRenameTaskDialog">
                                         <template v-slot:activator="{ props }">
                                             <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
                                                 v-bind="props">
@@ -232,6 +232,7 @@ export default {
             rules: {
                 required: value => !!value || this.tasksListsStore.translate('validations.required'),
             },
+            showRenameTaskDialog: false
         }
     },
     computed: {
@@ -300,6 +301,7 @@ export default {
         },
         renameTask() {
             this.tasksListsStore.renameTask(this.$props.listId, this.$props.taskId, this.taskTitle);
+            this.showRenameTaskDialog = false;
         }
     },
     mounted() {
