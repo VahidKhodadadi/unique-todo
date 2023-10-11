@@ -28,7 +28,7 @@
                                     <p>{{ tasksListsStore.translate('pages.tasks.duplicateList') }}</p>
                                 </li>
 
-                                <v-dialog width="auto" v-model="showRenameListDialog">
+                                <v-dialog width="100%" v-model="showRenameListDialog">
                                     <template v-slot:activator="{ props }">
                                         <li class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center"
                                             v-bind="props">
