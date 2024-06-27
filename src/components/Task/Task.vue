@@ -4,7 +4,7 @@
             <div class="flex flex-row justify-between items-center w-100">
                 <v-icon @click="goBack" size="large" color="black"
                     :icon="!isRTL ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
-                <h1 class="text-white text-2xl">{{ list.title }}</h1>
+                <h1 class="heading">{{ list.title }}</h1>
                 <div></div>
             </div>
         </template>
@@ -204,7 +204,7 @@
 
         <template #footer>
             <div class="flex justify-between items-center w-100">
-                <p><span class="text-sm text-slate-400">{{ tasksListsStore.translate('app.createdAt') }}</span> {{
+                <p class="text-sm"><span class="text-sm text-slate-400">{{ tasksListsStore.translate('app.createdAt') }}</span> {{
                     createdAtRelativeTime() }}</p>
                 <!-- <v-icon @click="deleteTask" size="large" color="red" icon="mdi-delete-outline"></v-icon> -->
             </div>

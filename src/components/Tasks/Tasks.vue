@@ -4,7 +4,7 @@
             <div class="flex flex-row justify-between items-center w-100">
                 <v-icon @click="goBack" size="large" color="black"
                     :icon="!isRTL ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
-                <h1 class="text-white text-2xl">{{ listName }}</h1>
+                <h1 class="heading">{{ listName }}</h1>
 
                 <v-dialog width="auto">
                     <template v-slot:activator="{ props }">
@@ -83,16 +83,16 @@
                 <li v-for="task in tasks"
                     class="flex w-100 justify-between py-2 border-b-2 border-l-blue-950 hover:cursor-pointer hover:bg-slate-50"
                     @click="goToTaskPage(task.id)">
-                    <div class="flex flex-col justify-between items-start ml-2">
+                    <div class="flex flex-col justify-between items-start ml-2 flex-grow">
                         <div class="flex justify-start items-center">
                             <v-icon v-if="isTaskDueDated(task)" size="large" color="orange" icon="mdi-alert"></v-icon>
-                            <p class="text-slate-800 font-semibold select-none">{{ task.title }}</p>
+                            <p class="text-slate-900 font-normal select-none">{{ task.title }}</p>
                         </div>
-                        <span v-if="Boolean(task) && task.steps.length > 0">{{ task.steps.filter(step => step.completed ===
+                        <span class="text-sm text-gray-500" v-if="Boolean(task) && task.steps.length > 0">{{ task.steps.filter(step => step.completed ===
                             true).length }} {{ tasksListsStore.translate('pages.tasks.of') }} {{ task.steps.length }}</span>
                     </div>
 
-                    <div>
+                    <div class="flex-shrink-0">
                         <v-checkbox v-model="task.completed" @click.stop="changeTaskStatus(task.id, !task.completed)"
                             hide-details></v-checkbox>
                     </div>

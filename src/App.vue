@@ -7,16 +7,16 @@
             height="30"></v-img> -->
         </div>
 
-        <div class="group relative z-20 hover:cursor-pointer">
+        <div tabindex="1" @blur="showLanguages = false" class="relative z-20 hover:cursor-pointer"
+          @click="showLanguages = !showLanguages">
           <div class="flex justify-end items-center">
-            <p class="capitalize mx-3 font-sans">{{ tasksListsStore.configs.country.lang }}</p>
-            <div>
-              <v-img :src="tasksListsStore.configs.country.flag" height="30" width="30"></v-img>
-            </div>
+            <p class="capitalize mx-3 font-serif">{{ tasksListsStore.configs.country.lang }}</p>
+            <v-img :src="tasksListsStore.configs.country.flag" height="30" width="30"></v-img>
           </div>
-          <ul class="absolute top-7 right-0 hidden group-hover:inline-block rounded-sm overflow-hidden">
-            <li v-for="cnt in countries" class="flex justify-end items-center bg-slate-200 px-3 hover:bg-slate-300"
-              @click="changeCountry(cnt)">
+          <ul v-if="showLanguages" class="absolute rounded-md overflow-hidden border-2 border-gray-200"
+            :class="isRTL ? 'left-2 top-7' : 'right-2 top-7'">
+            <li v-for=" cnt  in  countries "
+              class="flex justify-end items-center bg-slate-100 px-5 py-2 hover:bg-slate-200" @click="changeCountry(cnt)">
               <span class="capitalize font-sans">{{ cnt.lang }}</span>
               <div :class="!isRTL ? 'ml-3' : 'mr-3'">
                 <v-img :src="cnt.flag" height="30" width="30"></v-img>
@@ -41,7 +41,8 @@ export default {
   data() {
     return {
       tasksListsStore: useTasksStore(),
-      countries
+      countries,
+      showLanguages: false
     }
   },
   methods: {
@@ -50,6 +51,7 @@ export default {
     },
     changeCountry(cnt) {
       this.setConfigKey('country', cnt);
+      // this.showLanguages = false;
       document.dir = cnt.direction;
     }
   },
@@ -82,9 +84,13 @@ export default {
 }
 
 :root[dir='rtl'] * {
-  font-family: 'Vazir';
+  font-family: 'Vazir' !important;
   letter-spacing: -1px;
   direction: rtl;
+}
+
+* {
+  font-family: inherit !important;
 }
 </style>
 

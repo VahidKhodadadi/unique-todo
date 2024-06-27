@@ -7,3 +7,7 @@
 main {
     padding: 20px;
 }
+
+.heading {
+    @apply text-white text-2xl overflow-hidden text-ellipsis whitespace-nowrap;
+}
