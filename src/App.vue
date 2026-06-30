@@ -34,46 +34,39 @@
   </RouterView>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref, computed, watch, onMounted } from 'vue';
 import { useTasksStore, countries } from './store/tasks';
 
-export default {
-  data() {
-    return {
-      tasksListsStore: useTasksStore(),
-      countries,
-      showLanguages: false
-    }
-  },
-  methods: {
-    setConfigKey(key, value) {
-      this.tasksListsStore.setConfigKey(key, value);
-    },
-    changeCountry(cnt) {
-      this.setConfigKey('country', cnt);
-      // this.showLanguages = false;
-      document.dir = cnt.direction;
-    }
-  },
-  mounted() {
-    this.tasksListsStore.loadTasks();
-    this.tasksListsStore.loadConfigs();
-    this.tasksListsStore.checkForDueDatedTasks();
-    this.tasksListsStore.checkForReminders();
-  },
-  watch: {
-    'tasksListsStore.configs.country.lang'(newLang, oldLang) {
-      import(`../src/assets/languages/${newLang}.json`).then(newLanguageData => {
-        this.tasksListsStore.setLanguageData(newLanguageData.default);
-      })
-    }
-  },
-  computed: {
-    isRTL() {
-      return this.tasksListsStore.configs.country.direction === 'rtl';
-    }
-  }
-}
+const tasksListsStore = useTasksStore();
+const showLanguages = ref(false);
+
+const setConfigKey = (key: 'country', value: any) => {
+  tasksListsStore.setConfigKey(key, value);
+};
+
+const changeCountry = (cnt: any) => {
+  setConfigKey('country', cnt);
+  showLanguages.value = false;
+  document.dir = cnt.direction;
+};
+
+onMounted(() => {
+  tasksListsStore.loadTasks();
+  tasksListsStore.loadConfigs();
+  tasksListsStore.checkForDueDatedTasks();
+  tasksListsStore.checkForReminders();
+});
+
+watch(() => tasksListsStore.configs.country.lang, (newLang: string, oldLang: string) => {
+  import(`../src/assets/languages/${newLang}.json`).then(newLanguageData => {
+    tasksListsStore.setLanguageData(newLanguageData.default);
+  });
+});
+
+const isRTL = computed(() => {
+  return tasksListsStore.configs.country.direction === 'rtl';
+});
 </script>
 
 <style>

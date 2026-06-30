@@ -18,6 +18,7 @@
     "@mdi/font": "^7.2.96",
     "moment-jalaali": "^0.9.6",
     "pinia": "^3.0.4",
+    "uuid": "^14.0.1",
     "vue": "^3.5.35",
     "vue-router": "^4.2.2",
     "vuetify": "^3.3.12"

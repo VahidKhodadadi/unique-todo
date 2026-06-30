@@ -35,18 +35,21 @@ export const copyToClipboard = (text) => {
 export const notifyUser = message => {
     if (!('Notification' in window)) {
         console.log('Notification API is not available!');
-        return;
+        return null;
     }
     else if (Notification.permission === 'granted') {
-        return new Notification(message);
+        const notification = new Notification(message);
+        return notification;
     }
     else if (Notification.permission !== 'denied') {
         Notification.requestPermission().then(permission => {
             if (permission === 'granted') {
-                return new Notification(message);
+                const notification = new Notification(message);
+                return notification;
             }
-        })
+        });
     }
+    return null;
 }
 
 export const isTaskDueDated = (date, completed) => {
