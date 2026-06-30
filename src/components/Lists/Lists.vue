@@ -3,7 +3,7 @@
         <template #header>
             <div class="flex flex-row justify-between items-center w-100">
                 <div></div>
-                <h1 class="heading">{{ tasksListsStore.translate('pages.lists.lists') }}</h1>
+                <h1 class="heading" data-test="heading">{{ tasksListsStore.translate('pages.lists.lists') }}</h1>
                 <v-icon @click="goToSearchPage" size="large" color="black" icon="mdi-magnify"></v-icon>
             </div>
         </template>
