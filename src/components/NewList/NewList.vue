@@ -22,7 +22,7 @@
 
                 <!-- <div class="flex items-center justify-around w-100"> -->
                 <!-- <v-btn color="blue-grey-darken-3" @click="goToTasksListPage" size="large" variant="text">Cancel</v-btn> -->
-                 <v-btn class="w-full sm:w-auto" color="blue-grey-darken-3" type="submit" size="large" :disabled="!listTitle || listTitle.trim() === ''">{{
+                 <v-btn class="w-full sm:w-auto" prepend-icon="mdi-plus" color="primary" type="submit" size="large" :disabled="!listTitle || listTitle.trim() === ''">{{
                      tasksListsStore.translate('pages.newList.addList') }}</v-btn>
                 <!-- </div> -->
             </v-form>
