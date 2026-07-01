@@ -27,9 +27,9 @@
                         <v-card>
                             <v-card-text>
                                 <ul class="flex flex-col">
-                                    <v-dialog width="auto">
+                                    <v-dialog width="auto" v-model="showRemindMeDialog">
                                         <template v-slot:activator="{ props }">
-                                            <li v-bind="props"
+                                            <li v-bind="props" @click="openRemindDialog"
                                                 class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center">
                                                 <v-icon :class="isRTL ? 'ml-3' : 'mr-3'" size="large" color="black"
                                                     icon="mdi-alarm-snooze"></v-icon>
@@ -62,9 +62,9 @@
                                         </v-card>
                                     </v-dialog>
 
-                                    <v-dialog width="auto">
+                                    <v-dialog width="auto" v-model="showDueDateDialog">
                                         <template v-slot:activator="{ props }">
-                                            <li v-bind="props"
+                                            <li v-bind="props" @click="openDueDateDialog"
                                                 class="w-100 hover:cursor-pointer hover:bg-slate-50 h-8 flex items-center">
                                                 <v-icon :class="isRTL ? 'ml-3' : 'mr-3'" size="large" color="black"
                                                     icon="mdi-calendar-clock"></v-icon>
@@ -232,7 +232,9 @@ export default {
             rules: {
                 required: value => !!value || this.tasksListsStore.translate('validations.required'),
             },
-            showRenameTaskDialog: false
+            showRenameTaskDialog: false,
+            showRemindMeDialog: false,
+            showDueDateDialog: false
         }
     },
     computed: {
@@ -294,14 +296,22 @@ export default {
         setTaskRemindDateTime() {
             this.tasksListsStore.updateTask(this.listId, this.taskId, 'remindMeAtDateTime', this.remindMeDateTime);
             this.remindMeDateTime = '';
+            this.showRemindMeDialog = false;
         },
         setTaskDueDate() {
             this.tasksListsStore.updateTask(this.listId, this.taskId, 'dueDate', this.dueDate);
             this.dueDate = '';
+            this.showDueDateDialog = false;
         },
         renameTask() {
             this.tasksListsStore.renameTask(this.$props.listId, this.$props.taskId, this.taskTitle);
             this.showRenameTaskDialog = false;
+        },
+        openRemindDialog() {
+            this.remindMeDateTime = this.task.remindMeAtDateTime || '';
+        },
+        openDueDateDialog() {
+            this.dueDate = this.task.dueDate || '';
         }
     },
     mounted() {
