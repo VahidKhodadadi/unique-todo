@@ -1,11 +1,11 @@
 @import './base.css';
 
 #app {
-    height: 100vh;
+    @apply h-screen;
 }
 
 main {
-    padding: 20px;
+    @apply p-5;
 }
 
 .heading {

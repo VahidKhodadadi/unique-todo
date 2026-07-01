@@ -6,47 +6,47 @@ import USAFlag from '../assets/country-flags/united-states-of-america.png';
 import { v4 as uuidv4 } from 'uuid';
 
 interface Country {
-  name: string;
-  shortName: string;
-  direction: string;
-  language: string;
-  lang: string;
-  currency: string;
-  flag: string;
+    name: string;
+    shortName: string;
+    direction: string;
+    language: string;
+    lang: string;
+    currency: string;
+    flag: string;
 }
 
 interface TaskStep {
-  id: string;
-  title: string;
-  createdAtDate: string;
-  completed: boolean;
+    id: string;
+    title: string;
+    createdAtDate: string;
+    completed: boolean;
 }
 
 interface Task {
-  id: string;
-  completed: boolean;
-  createdAtDate: string;
-  dueDate: string | null;
-  remindMeAtDateTime: string | null;
-  steps: TaskStep[];
-  title: string;
+    id: string;
+    completed: boolean;
+    createdAtDate: string;
+    dueDate: string | null;
+    remindMeAtDateTime: string | null;
+    steps: TaskStep[];
+    title: string;
 }
 
 interface List {
-  id: string;
-  createdAtDate: string;
-  tasks: Task[];
-  title: string;
+    id: string;
+    createdAtDate: string;
+    tasks: Task[];
+    title: string;
 }
 
 interface Configs {
-  country: Country;
-  languageData: any;
+    country: Country;
+    languageData: any;
 }
 
 interface State {
-  lists: List[];
-  configs: Configs;
+    lists: List[];
+    configs: Configs;
 }
 
 export const countries: Country[] = [
@@ -149,14 +149,14 @@ export const useTasksStore = defineStore('tasksLists', {
                     console.error('Failed to load default language data:', error);
                 });
         },
-        getListById(listId: string): List | undefined {
-            return this.$state.lists.find(list => list.id == listId);
+        getListById(listId: string): List {
+            return this.$state.lists.find(list => list.id == listId)!;
         },
-        getTaskById(list: List, taskId: string): Task | undefined {
-            return list.tasks.find(task => task.id == taskId);
+        getTaskById(list: List, taskId: string): Task {
+            return list.tasks.find(task => task.id == taskId)!;
         },
-        getStepById(task: Task, stepId: string): TaskStep | undefined {
-            return task.steps.find(step => step.id == stepId);
+        getStepById(task: Task, stepId: string): TaskStep {
+            return task.steps.find(step => step.id == stepId)!;
         },
         addList(list: { title: string }) {
             this.$state.lists.push({
@@ -187,7 +187,7 @@ export const useTasksStore = defineStore('tasksLists', {
                 this.saveTasks();
             }
         },
-        updateTask(listId: string, taskId: string, taskKey: string, taskValue: any) {
+        updateTask<K extends keyof Task>(listId: string, taskId: string, taskKey: K, taskValue: Task[K]) {
             const list = this.getListById(listId);
             const task = this.getTaskById(list, taskId);
             if (list && task) {
