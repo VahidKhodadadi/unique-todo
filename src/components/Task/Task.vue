@@ -54,7 +54,7 @@
                                                         size="large" variant="text">{{
                                                             tasksListsStore.translate('app.cancel')
                                                         }}</v-btn> -->
-                                                    <v-btn variant="elevated" color="blue-grey-darken-3"
+                                                    <v-btn variant="elevated" prepend-icon="mdi-content-save" class="w-full" color="primary"
                                                         @click="setTaskRemindDateTime" size="large">{{
                                                             tasksListsStore.translate('app.save') }}</v-btn>
                                                 </div>
@@ -89,7 +89,7 @@
                                                         size="large" variant="text">{{
                                                             tasksListsStore.translate('app.cancel')
                                                         }}</v-btn> -->
-                                                    <v-btn variant="elevated" color="blue-grey-darken-3"
+                                                    <v-btn variant="elevated" prepend-icon="mdi-content-save" class="w-full" color="primary"
                                                         @click="setTaskDueDate" size="large">{{
                                                             tasksListsStore.translate('app.save') }}</v-btn>
                                                 </div>
@@ -124,7 +124,7 @@
                                                         size="large" variant="text">{{
                                                             tasksListsStore.translate('app.cancel')
                                                         }}</v-btn> -->
-                                                    <v-btn variant="elevated" color="blue-grey-darken-3" @click="renameTask"
+                                                    <v-btn variant="elevated" prepend-icon="mdi-content-save" class="w-full" color="primary" @click="renameTask"
                                                         size="large">{{
                                                             tasksListsStore.translate('app.save') }}</v-btn>
                                                 </div>

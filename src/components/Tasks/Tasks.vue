@@ -110,7 +110,7 @@
         </template>
 
         <template #footer>
-            <v-btn class="w-full sm:w-auto" @click="goToNewTaskPage(listId)" size="large" variant="outlined"
+            <v-btn class="w-full sm:w-auto" color="primary" @click="goToNewTaskPage(listId)" size="large" variant="outlined"
                 prepend-icon="mdi-plus">{{ tasksListsStore.translate('pages.tasks.newTask') }}</v-btn>
         </template>
     </Layout>
