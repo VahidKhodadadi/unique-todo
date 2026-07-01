@@ -197,7 +197,7 @@
                     <v-text-field class="w-100" v-model="newStepTitle" clearable :rules="[rules.required]"
                         :placeholder="tasksListsStore.translate('pages.task.enterStepTitle')"></v-text-field>
                 <v-btn class="w-full sm:w-auto" color="primary" type="submit" size="large" :disabled="!newStepTitle || newStepTitle.trim() === ''"
-                    prepend-icon="mdi-plus">{{ tasksListsStore.translate('pages.task.addStep') }}</v-btn>
+                    prepend-icon="mdi-content-save">{{ tasksListsStore.translate('pages.task.addStep') }}</v-btn>
                 </v-form>
             </div>
         </template>
