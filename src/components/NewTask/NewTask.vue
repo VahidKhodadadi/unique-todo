@@ -20,8 +20,8 @@
                 <v-text-field class="w-100" type="datetime-local" v-model="taskRemindMeAtDateTime" clearable
                     :label="tasksListsStore.translate('pages.newTask.remindMeAt')"></v-text-field>
 
-                <v-btn class="w-full sm:w-auto" color="blue-grey-darken-3" type="submit" size="large">{{
-                    tasksListsStore.translate('pages.newTask.addTask') }}</v-btn>
+                 <v-btn class="w-full sm:w-auto" color="blue-grey-darken-3" type="submit" size="large" :disabled="!taskTitle || taskTitle.trim() === ''">{{
+                     tasksListsStore.translate('pages.newTask.addTask') }}</v-btn>
             </v-form>
         </template>
     </Layout>

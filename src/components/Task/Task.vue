@@ -4,7 +4,7 @@
             <div class="flex flex-row justify-between items-center w-100">
                 <v-icon @click="goBack" size="large" color="black"
                     :icon="!isRTL ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
-                <h1 class="heading">{{ list.title }}</h1>
+                <h1 class="text-lg font-bold">{{ list.title }}</h1>
                 <div></div>
             </div>
         </template>
@@ -17,7 +17,7 @@
                             @click="changeTaskStatus(!task.completed)"></v-checkbox>
                         <div v-if="isTaskDueDated(task)"><v-icon v-if="isTaskDueDated(task)" size="large" color="orange"
                                 icon="mdi-alert"></v-icon></div>
-                        <p class="mx-3 text-slate-800 font-semibold">{{ task.title }}</p>
+                            <p class="mx-3 text-slate-800 font-semibold text-sm">{{ task.title }}</p>
                     </div>
 
                     <v-dialog width="auto">
@@ -196,8 +196,8 @@
                 <v-form validate-on="submit" @submit.prevent="addNewStep()" class="w-100 px-3 flex flex-col items-center">
                     <v-text-field class="w-100" v-model="newStepTitle" clearable :rules="[rules.required]"
                         :placeholder="tasksListsStore.translate('pages.task.enterStepTitle')"></v-text-field>
-                    <v-btn class="w-full sm:w-auto" color="blue-grey-darken-3" type="submit" size="large"
-                        prepend-icon="mdi-plus">{{ tasksListsStore.translate('pages.task.addStep') }}</v-btn>
+                <v-btn class="w-full sm:w-auto" color="primary" type="submit" size="large" :disabled="!newStepTitle || newStepTitle.trim() === ''"
+                    prepend-icon="mdi-plus">{{ tasksListsStore.translate('pages.task.addStep') }}</v-btn>
                 </v-form>
             </div>
         </template>

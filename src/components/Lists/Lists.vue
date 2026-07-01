@@ -10,7 +10,7 @@
         <template #main>
             <div v-if="listItems.length == 0" class="text-center py-8">
                 <p class="text-gray-500">{{ tasksListsStore.translate('pages.lists.noList') }}</p>
-                <v-btn @click="goToNewListPage" class="mt-4" color="primary" prepend-icon="mdi-plus">
+                <v-btn @click="goToNewListPage" class="mt-4" color="primary" variant="outlined" prepend-icon="mdi-plus">
                     {{ tasksListsStore.translate('pages.lists.newList') }}
                 </v-btn>
             </div>
@@ -31,12 +31,12 @@
                             </p>
                         </div>
                     </div>
-                    <v-icon @click.stop="deleteList(list.id)" size="small" color="error" icon="mdi-delete-outline" class="opacity-0 group-hover:opacity-100 transition-opacity"></v-icon>
+                     <v-icon @click.stop="deleteList(list.id)" size="small" color="error" icon="mdi-delete-outline" class="transition-opacity"></v-icon>
                 </li>
             </ul>
         </template>
         <template #footer>
-            <v-btn class="w-full" @click="goToNewListPage" size="large" color="primary" prepend-icon="mdi-plus">
+            <v-btn class="w-full" @click="goToNewListPage" size="large" color="primary" variant="outlined" prepend-icon="mdi-plus">
                 {{ tasksListsStore.translate('pages.lists.newList') }}
             </v-btn>
         </template>

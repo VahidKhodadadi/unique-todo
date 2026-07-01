@@ -4,7 +4,7 @@
             <div class="flex flex-row justify-between items-center w-100">
                 <v-icon @click="goBack" size="large" color="black"
                     :icon="!isRTL ? 'mdi-arrow-left' : 'mdi-arrow-right'"></v-icon>
-                <h1 class="heading">{{ listName }}</h1>
+                <h1 class="text-lg font-bold">{{ listName }}</h1>
 
                 <v-dialog width="auto">
                     <template v-slot:activator="{ props }">
@@ -52,8 +52,8 @@
                                                 <!-- <v-btn color="blue-grey-darken-3" @click="showRenameModal = false"
                                                     size="large" variant="text">{{ tasksListsStore.translate('app.cancel')
                                                     }}</v-btn> -->
-                                                <v-btn variant="elevated" color="blue-grey-darken-3" @click="renameList"
-                                                    size="large">{{
+                                                <v-btn variant="elevated" color="primary" @click="renameList" class="w-full"
+                                                    size="large" prepend-icon="mdi-content-save">{{
                                                         tasksListsStore.translate('app.save') }}</v-btn>
                                             </div>
                                         </v-card-actions>
@@ -86,9 +86,9 @@
                     <div class="flex flex-col justify-between items-start ml-2 flex-grow">
                         <div class="flex justify-start items-center">
                             <v-icon v-if="isTaskDueDated(task)" size="large" color="orange" icon="mdi-alert"></v-icon>
-                            <p class="text-slate-900 font-normal select-none">{{ task.title }}</p>
+                            <p class="text-slate-900 font-normal select-none text-sm">{{ task.title }}</p>
                         </div>
-                        <span class="text-sm text-gray-500" v-if="Boolean(task) && task.steps.length > 0">{{ task.steps.filter(step => step.completed ===
+                        <span class="text-xs text-gray-500" v-if="Boolean(task) && task.steps.length > 0">{{ task.steps.filter(step => step.completed ===
                             true).length }} {{ tasksListsStore.translate('pages.tasks.of') }} {{ task.steps.length }}</span>
                     </div>
 
@@ -110,7 +110,7 @@
         </template>
 
         <template #footer>
-            <v-btn class="w-full sm:w-auto" @click="goToNewTaskPage(listId)" size="large" variant="text"
+            <v-btn class="w-full sm:w-auto" @click="goToNewTaskPage(listId)" size="large" variant="outlined"
                 prepend-icon="mdi-plus">{{ tasksListsStore.translate('pages.tasks.newTask') }}</v-btn>
         </template>
     </Layout>
